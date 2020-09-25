@@ -17,6 +17,7 @@ CREATE TABLE tbl_usuario (
 
 
 Select * from tbl_usuario
+
 CREATE TABLE tbl_token (
   id_token Numeric(10) NOT NULL identity,
   status_token int,
@@ -99,9 +100,8 @@ CREATE TABLE tbl_funcionario_est (
 CREATE TABLE tbl_veiculos (
   id_placa_veiculo VARCHAR(8) NOT NULL,
   tbl_token_id_token numeric(10) NULL,
-  tbl_usuario_id_CPF_usuario VARCHAR(11) NOT NULL,
-  cidade_veiculo VARCHAR(100) NOT NULL,
-  estado_veiculo VARCHAR(2) NOT NULL,
+  cidade_veiculo VARCHAR(100) NULL,
+  estado_veiculo VARCHAR(2) NULL,
   nome_prop_veiculo VARCHAR(150) NOT NULL,
   marca_veiculo VARCHAR(30) NOT NULL,
   modelo_veiculo VARCHAR(20) NOT NULL,
@@ -109,14 +109,26 @@ CREATE TABLE tbl_veiculos (
   seguro_veiculo int NOT NULL DEFAULT 0,
   PRIMARY KEY(id_placa_veiculo),
   INDEX tbl_veiculos_FKIndex1(tbl_token_id_token),
-  INDEX tbl_veiculos_FKIndex2(tbl_usuario_id_CPF_usuario),
+  
   FOREIGN KEY(tbl_token_id_token)
     REFERENCES tbl_token(id_token),
-     
-  FOREIGN KEY(tbl_usuario_id_CPF_usuario)
-    REFERENCES tbl_usuario(id_CPF_usuario)
-      
+         
 );
+
+
+CREATE TABLE tbl_user_veiculo (
+	id_CPF_usuario VARCHAR(11) NOT NULL,
+	id_placa_veiculo VARCHAR(8) NOT NULL,
+
+	FOREIGN KEY(id_CPF_usuario)
+    REFERENCES tbl_usuario(id_CPF_usuario),
+
+	FOREIGN KEY(id_placa_veiculo)
+    REFERENCES tbl_veiculos(id_placa_veiculo),
+
+
+)
+
 
 CREATE TABLE tbl_vaga (
   id_vaga numeric(10) NOT NULL identity,
@@ -329,9 +341,9 @@ insert tbl_usuario (id_CPF_usuario, nome_usuario, ddd_cel, cel_usuario, email_us
 
 Select * from tbl_usuario
 
-insert tbl_veiculos (id_placa_veiculo, tbl_token_id_token, tbl_usuario_id_CPF_usuario, nome_prop_veiculo, cidade_veiculo, estado_veiculo, marca_veiculo, modelo_veiculo, cor_veiculo, seguro_veiculo) values
-('AAA1234', 1,'00000001234', 'Maria de Souza', 'São Paulo', 'SP', 'Citroen', 'C3', 'vermelho', 1),  
-('BBB4321', 2,'00000001235', 'José dos Santos', 'Rio de Janeiro', 'RJ', 'Fiat', 'uno', 'vermelho', 1)
+insert tbl_veiculos (id_placa_veiculo, tbl_token_id_token, nome_prop_veiculo, cidade_veiculo, estado_veiculo, marca_veiculo, modelo_veiculo, cor_veiculo, seguro_veiculo) values
+('AAA1234', 1, 'Maria de Souza', 'São Paulo', 'SP', 'Citroen', 'C3', 'vermelho', 1),  
+('BBB4321', 2, 'José dos Santos', 'Rio de Janeiro', 'RJ', 'Fiat', 'uno', 'vermelho', 1)
 
 Select * from tbl_veiculos
 
@@ -650,4 +662,7 @@ insert tbl_uso (timestamp_inicio_uso, tbl_vaga_id_vaga, tbl_token_id_token,tbl_u
 
 
 Select timestamp_inicio_uso, timestamp_final_uso, (DATEDIFF(hour, timestamp_inicio_uso, timestamp_final_uso) * valor_servico_uso) from tbl_uso 
+
+
+select count(*) as permissao from tbl_funcionario_est where id_func=19041996 and permissao = 0
 
