@@ -541,7 +541,12 @@ Select * from tbl_uso
 insert tbl_reservas (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_reserva, timestamp_final_reserva, valor_servico_reserva) values 
 
 
-(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
+(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
+(3, 2, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
+(4, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
+(5, 2, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
+(6, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
+(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
 (3, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
 (4, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
 (5, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
@@ -647,13 +652,17 @@ insert tbl_uso (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario
 (6, 2, '00000001234',1, '2020-09-15 18:43:59.953', 10)
 
 
-Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(hour, U.timestamp_inicio_uso, U.timestamp_final_uso) * U.valor_servico_uso) as total, C.nome_usuario, S.desc_servico,v.local_vaga, R.id_placa_veiculo
+Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(hour, U.timestamp_inicio_uso, U.timestamp_final_uso) * U.valor_servico_uso) 
+as total, C.nome_usuario, S.desc_servico,v.local_vaga, R.id_placa_veiculo
 from  tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario  = C.id_CPF_usuario
 inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico
 inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga
 inner join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
 
 Select *, datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) from tbl_uso where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 300
+
+Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(hour, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * R.valor_servico_reserva) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where datediff(hour, timestamp_final_reserva, CURRENT_TIMESTAMP) <= 24
+
 
 
 Select * from tbl_uso where timestamp_final_uso is null
