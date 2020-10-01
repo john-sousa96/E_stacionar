@@ -37,16 +37,21 @@
             // 
             // menu_func
             // 
+            this.menu_func.AllowMerge = false;
+            this.menu_func.AutoSize = false;
             this.menu_func.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.menu_func.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.menu_func.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_relatorio_item,
             this.menu_reservas_item,
             this.menu_controle_item});
+            this.menu_func.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menu_func.Location = new System.Drawing.Point(0, 0);
             this.menu_func.Name = "menu_func";
             this.menu_func.Size = new System.Drawing.Size(1248, 48);
             this.menu_func.TabIndex = 0;
-            this.menu_func.Text = "menuStrip1";
+            this.menu_func.TabStop = true;
+            this.menu_func.Text = "Menu_principal";
             // 
             // menu_relatorio_item
             // 
@@ -56,6 +61,7 @@
             this.menu_relatorio_item.Padding = new System.Windows.Forms.Padding(4, 10, 200, 0);
             this.menu_relatorio_item.Size = new System.Drawing.Size(335, 44);
             this.menu_relatorio_item.Text = "RELATÓRIO";
+            this.menu_relatorio_item.Click += new System.EventHandler(this.menu_relatorio_item_Click);
             // 
             // menu_reservas_item
             // 
@@ -65,6 +71,7 @@
             this.menu_reservas_item.Padding = new System.Windows.Forms.Padding(4, 0, 200, 0);
             this.menu_reservas_item.Size = new System.Drawing.Size(323, 44);
             this.menu_reservas_item.Text = "RESERVAS";
+            this.menu_reservas_item.Click += new System.EventHandler(this.menu_reservas_item_Click);
             // 
             // menu_controle_item
             // 
@@ -74,26 +81,29 @@
             this.menu_controle_item.Padding = new System.Windows.Forms.Padding(4, 0, 200, 0);
             this.menu_controle_item.Size = new System.Drawing.Size(430, 44);
             this.menu_controle_item.Text = "CONTROLE MANUAL";
+            this.menu_controle_item.Click += new System.EventHandler(this.menu_controle_item_Click);
             // 
             // form_func
             // 
+            this.AccessibleName = "Formulario_principal_funcionario";
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1248, 791);
             this.Controls.Add(this.menu_func);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menu_func;
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "form_func";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.ShowIcon = false;
             this.Text = "CONTROLE DO ESTACIONAMENTO";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menu_func.ResumeLayout(false);
             this.menu_func.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

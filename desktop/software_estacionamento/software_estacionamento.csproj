@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="conexao.cs" />
+    <Compile Include="Controle_Admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controle_Admin.Designer.cs">
+      <DependentUpon>Controle_Admin.cs</DependentUpon>
+    </Compile>
     <Compile Include="controle_func.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +64,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormConsultaVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConsultaVeiculo.Designer.cs">
+      <DependentUpon>FormConsultaVeiculo.cs</DependentUpon>
     </Compile>
     <Compile Include="form_func.cs">
       <SubType>Form</SubType>
@@ -83,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormConsultaVeiculo.resx">
+      <DependentUpon>FormConsultaVeiculo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form_func.resx">
       <DependentUpon>form_func.cs</DependentUpon>

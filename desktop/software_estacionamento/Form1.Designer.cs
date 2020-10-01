@@ -39,7 +39,7 @@
             // 
             this.lbl_user_login.AutoSize = true;
             this.lbl_user_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_user_login.Location = new System.Drawing.Point(13, 41);
+            this.lbl_user_login.Location = new System.Drawing.Point(35, 50);
             this.lbl_user_login.Name = "lbl_user_login";
             this.lbl_user_login.Size = new System.Drawing.Size(87, 24);
             this.lbl_user_login.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.lbl_senha_login.AutoSize = true;
             this.lbl_senha_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_senha_login.Location = new System.Drawing.Point(13, 102);
+            this.lbl_senha_login.Location = new System.Drawing.Point(46, 123);
             this.lbl_senha_login.Name = "lbl_senha_login";
             this.lbl_senha_login.Size = new System.Drawing.Size(76, 24);
             this.lbl_senha_login.TabIndex = 1;
@@ -58,34 +58,37 @@
             // txt_user
             // 
             this.txt_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_user.Location = new System.Drawing.Point(95, 39);
+            this.txt_user.Location = new System.Drawing.Point(128, 50);
             this.txt_user.Name = "txt_user";
-            this.txt_user.Size = new System.Drawing.Size(198, 26);
+            this.txt_user.Size = new System.Drawing.Size(220, 26);
             this.txt_user.TabIndex = 2;
             // 
             // txt_senha
             // 
             this.txt_senha.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_senha.Location = new System.Drawing.Point(95, 102);
+            this.txt_senha.Location = new System.Drawing.Point(128, 123);
             this.txt_senha.Name = "txt_senha";
-            this.txt_senha.Size = new System.Drawing.Size(198, 26);
+            this.txt_senha.PasswordChar = '•';
+            this.txt_senha.Size = new System.Drawing.Size(220, 26);
             this.txt_senha.TabIndex = 3;
             // 
             // btn_acessar
             // 
             this.btn_acessar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_acessar.Location = new System.Drawing.Point(82, 144);
+            this.btn_acessar.Location = new System.Drawing.Point(67, 196);
             this.btn_acessar.Name = "btn_acessar";
-            this.btn_acessar.Size = new System.Drawing.Size(141, 48);
+            this.btn_acessar.Size = new System.Drawing.Size(260, 55);
             this.btn_acessar.TabIndex = 4;
             this.btn_acessar.Text = "Acessar";
             this.btn_acessar.UseVisualStyleBackColor = true;
+            this.btn_acessar.Click += new System.EventHandler(this.btn_acessar_Click);
             // 
             // form_login
             // 
+            this.AcceptButton = this.btn_acessar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 213);
+            this.ClientSize = new System.Drawing.Size(392, 288);
             this.ControlBox = false;
             this.Controls.Add(this.btn_acessar);
             this.Controls.Add(this.txt_senha);
