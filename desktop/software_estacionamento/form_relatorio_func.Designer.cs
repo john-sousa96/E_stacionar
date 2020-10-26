@@ -30,10 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridRelatorio = new System.Windows.Forms.DataGridView();
-            this.cbox_relatorio_func = new System.Windows.Forms.ComboBox();
-            this.lbl_selecione = new System.Windows.Forms.Label();
-            this.btn_Consultar_Veiculo = new System.Windows.Forms.Button();
-            this.dataGridVeiculos = new System.Windows.Forms.DataGridView();
             this.id_placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_nota_fiscal_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbl_usuario_nome_usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +39,10 @@
             this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timestamp_final_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbox_relatorio_func = new System.Windows.Forms.ComboBox();
+            this.lbl_selecione = new System.Windows.Forms.Label();
+            this.btn_Consultar_Veiculo = new System.Windows.Forms.Button();
+            this.dataGridVeiculos = new System.Windows.Forms.DataGridView();
             this.placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cidade_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Estado_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,60 +79,6 @@
             this.dataGridRelatorio.Size = new System.Drawing.Size(1142, 410);
             this.dataGridRelatorio.TabIndex = 0;
             this.dataGridRelatorio.SelectionChanged += new System.EventHandler(this.dataGridRelatorio_SelectionChanged);
-            // 
-            // cbox_relatorio_func
-            // 
-            this.cbox_relatorio_func.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbox_relatorio_func.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbox_relatorio_func.FormattingEnabled = true;
-            this.cbox_relatorio_func.Items.AddRange(new object[] {
-            "Selecione o tipo de relatório",
-            "Relatório de serviços em uso",
-            "Relatório dos serviços das últimas 24 horas"});
-            this.cbox_relatorio_func.Location = new System.Drawing.Point(309, 62);
-            this.cbox_relatorio_func.Name = "cbox_relatorio_func";
-            this.cbox_relatorio_func.Size = new System.Drawing.Size(862, 28);
-            this.cbox_relatorio_func.TabIndex = 1;
-            this.cbox_relatorio_func.SelectedIndexChanged += new System.EventHandler(this.cbox_relatorio_func_SelectedIndexChanged);
-            // 
-            // lbl_selecione
-            // 
-            this.lbl_selecione.AutoSize = true;
-            this.lbl_selecione.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_selecione.Location = new System.Drawing.Point(98, 65);
-            this.lbl_selecione.Name = "lbl_selecione";
-            this.lbl_selecione.Size = new System.Drawing.Size(179, 20);
-            this.lbl_selecione.TabIndex = 2;
-            this.lbl_selecione.Text = "Selecione o relatório:";
-            // 
-            // btn_Consultar_Veiculo
-            // 
-            this.btn_Consultar_Veiculo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Consultar_Veiculo.Location = new System.Drawing.Point(541, 709);
-            this.btn_Consultar_Veiculo.Name = "btn_Consultar_Veiculo";
-            this.btn_Consultar_Veiculo.Size = new System.Drawing.Size(272, 48);
-            this.btn_Consultar_Veiculo.TabIndex = 3;
-            this.btn_Consultar_Veiculo.Text = "Consultar Veículo";
-            this.btn_Consultar_Veiculo.UseVisualStyleBackColor = true;
-            this.btn_Consultar_Veiculo.Visible = false;
-            this.btn_Consultar_Veiculo.Click += new System.EventHandler(this.btn_Consultar_Veiculo_Click);
-            // 
-            // dataGridVeiculos
-            // 
-            this.dataGridVeiculos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridVeiculos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.placa_veiculo,
-            this.cidade_veiculo,
-            this.Estado_veiculo,
-            this.Nome_prop,
-            this.Marca_veiculo,
-            this.Modelo_veiculo,
-            this.Cor_veiculo});
-            this.dataGridVeiculos.Location = new System.Drawing.Point(127, 572);
-            this.dataGridVeiculos.Name = "dataGridVeiculos";
-            this.dataGridVeiculos.Size = new System.Drawing.Size(1142, 97);
-            this.dataGridVeiculos.TabIndex = 4;
-            this.dataGridVeiculos.Visible = false;
             // 
             // id_placa_veiculo
             // 
@@ -198,6 +144,60 @@
             this.total.HeaderText = "total";
             this.total.Name = "total";
             this.total.ReadOnly = true;
+            // 
+            // cbox_relatorio_func
+            // 
+            this.cbox_relatorio_func.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_relatorio_func.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbox_relatorio_func.FormattingEnabled = true;
+            this.cbox_relatorio_func.Items.AddRange(new object[] {
+            "Selecione o tipo de relatório",
+            "Relatório de serviços em uso",
+            "Relatório dos serviços das últimas 24 horas"});
+            this.cbox_relatorio_func.Location = new System.Drawing.Point(309, 62);
+            this.cbox_relatorio_func.Name = "cbox_relatorio_func";
+            this.cbox_relatorio_func.Size = new System.Drawing.Size(862, 28);
+            this.cbox_relatorio_func.TabIndex = 1;
+            this.cbox_relatorio_func.SelectedIndexChanged += new System.EventHandler(this.cbox_relatorio_func_SelectedIndexChanged);
+            // 
+            // lbl_selecione
+            // 
+            this.lbl_selecione.AutoSize = true;
+            this.lbl_selecione.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_selecione.Location = new System.Drawing.Point(98, 65);
+            this.lbl_selecione.Name = "lbl_selecione";
+            this.lbl_selecione.Size = new System.Drawing.Size(179, 20);
+            this.lbl_selecione.TabIndex = 2;
+            this.lbl_selecione.Text = "Selecione o relatório:";
+            // 
+            // btn_Consultar_Veiculo
+            // 
+            this.btn_Consultar_Veiculo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Consultar_Veiculo.Location = new System.Drawing.Point(541, 709);
+            this.btn_Consultar_Veiculo.Name = "btn_Consultar_Veiculo";
+            this.btn_Consultar_Veiculo.Size = new System.Drawing.Size(272, 48);
+            this.btn_Consultar_Veiculo.TabIndex = 3;
+            this.btn_Consultar_Veiculo.Text = "Consultar Veículo";
+            this.btn_Consultar_Veiculo.UseVisualStyleBackColor = true;
+            this.btn_Consultar_Veiculo.Visible = false;
+            this.btn_Consultar_Veiculo.Click += new System.EventHandler(this.btn_Consultar_Veiculo_Click);
+            // 
+            // dataGridVeiculos
+            // 
+            this.dataGridVeiculos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridVeiculos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.placa_veiculo,
+            this.cidade_veiculo,
+            this.Estado_veiculo,
+            this.Nome_prop,
+            this.Marca_veiculo,
+            this.Modelo_veiculo,
+            this.Cor_veiculo});
+            this.dataGridVeiculos.Location = new System.Drawing.Point(127, 572);
+            this.dataGridVeiculos.Name = "dataGridVeiculos";
+            this.dataGridVeiculos.Size = new System.Drawing.Size(1142, 97);
+            this.dataGridVeiculos.TabIndex = 4;
+            this.dataGridVeiculos.Visible = false;
             // 
             // placa_veiculo
             // 
@@ -265,6 +265,7 @@
             this.AcceptButton = this.btn_Consultar_Veiculo;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1399, 809);
             this.Controls.Add(this.dataGridVeiculos);
             this.Controls.Add(this.btn_Consultar_Veiculo);

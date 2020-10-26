@@ -18,6 +18,7 @@ namespace software_estacionamento.Properties
     {
 
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        internal string controle_funcDBConnection;
 
         public static Settings Default
         {
