@@ -30,14 +30,6 @@
         {
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.id_reserva = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nome_usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_placa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timestamp_final_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Consultar_Veiculo = new System.Windows.Forms.Button();
             this.dataGridVeiculos = new System.Windows.Forms.DataGridView();
             this.placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +39,14 @@
             this.Marca_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Modelo_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cor_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_reserva = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nome_usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_placa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timestamp_final_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridVeiculos)).BeginInit();
             this.SuspendLayout();
@@ -77,57 +77,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1193, 361);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // id_reserva
-            // 
-            this.id_reserva.DataPropertyName = "id_reserva";
-            this.id_reserva.HeaderText = "Reserva";
-            this.id_reserva.Name = "id_reserva";
-            // 
-            // nome_usuario
-            // 
-            this.nome_usuario.DataPropertyName = "nome_usuario";
-            this.nome_usuario.FillWeight = 250F;
-            this.nome_usuario.HeaderText = "Nome cliente";
-            this.nome_usuario.Name = "nome_usuario";
-            this.nome_usuario.Width = 350;
-            // 
-            // id_placa
-            // 
-            this.id_placa.DataPropertyName = "id_placa_veiculo";
-            this.id_placa.HeaderText = "Placa do veículo";
-            this.id_placa.Name = "id_placa";
-            // 
-            // servico
-            // 
-            this.servico.DataPropertyName = "desc_servico";
-            this.servico.HeaderText = "Serviço";
-            this.servico.Name = "servico";
-            this.servico.Width = 200;
-            // 
-            // vaga
-            // 
-            this.vaga.DataPropertyName = "local_vaga";
-            this.vaga.HeaderText = "vaga";
-            this.vaga.Name = "vaga";
-            // 
-            // timestamp_inicio_uso
-            // 
-            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_reserva";
-            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
-            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
-            // 
-            // timestamp_final_uso
-            // 
-            this.timestamp_final_uso.DataPropertyName = "timestamp_final_reserva";
-            this.timestamp_final_uso.HeaderText = "hora final";
-            this.timestamp_final_uso.Name = "timestamp_final_uso";
-            // 
-            // subtotal
-            // 
-            this.subtotal.DataPropertyName = "subtotal";
-            this.subtotal.HeaderText = "Subtotal";
-            this.subtotal.Name = "subtotal";
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btn_Consultar_Veiculo
             // 
@@ -203,6 +153,58 @@
             this.Cor_veiculo.HeaderText = "Cor";
             this.Cor_veiculo.Name = "Cor_veiculo";
             // 
+            // id_reserva
+            // 
+            this.id_reserva.DataPropertyName = "id_reserva";
+            this.id_reserva.HeaderText = "Reserva";
+            this.id_reserva.Name = "id_reserva";
+            // 
+            // nome_usuario
+            // 
+            this.nome_usuario.DataPropertyName = "nome_usuario";
+            this.nome_usuario.FillWeight = 250F;
+            this.nome_usuario.HeaderText = "Nome cliente";
+            this.nome_usuario.Name = "nome_usuario";
+            this.nome_usuario.ReadOnly = true;
+            this.nome_usuario.Width = 350;
+            // 
+            // id_placa
+            // 
+            this.id_placa.DataPropertyName = "id_placa_veiculo";
+            this.id_placa.HeaderText = "Placa do veículo";
+            this.id_placa.Name = "id_placa";
+            // 
+            // servico
+            // 
+            this.servico.DataPropertyName = "desc_servico";
+            this.servico.HeaderText = "Serviço";
+            this.servico.Name = "servico";
+            this.servico.Width = 200;
+            // 
+            // vaga
+            // 
+            this.vaga.DataPropertyName = "local_vaga";
+            this.vaga.HeaderText = "vaga";
+            this.vaga.Name = "vaga";
+            // 
+            // timestamp_inicio_uso
+            // 
+            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_reserva";
+            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
+            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
+            // 
+            // timestamp_final_uso
+            // 
+            this.timestamp_final_uso.DataPropertyName = "timestamp_final_reserva";
+            this.timestamp_final_uso.HeaderText = "hora final";
+            this.timestamp_final_uso.Name = "timestamp_final_uso";
+            // 
+            // subtotal
+            // 
+            this.subtotal.DataPropertyName = "subtotal";
+            this.subtotal.HeaderText = "Subtotal";
+            this.subtotal.Name = "subtotal";
+            // 
             // reservas_func
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,14 +232,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn_Consultar_Veiculo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_reserva;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nome_usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn servico;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vaga;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_final_uso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subtotal;
         private System.Windows.Forms.DataGridView dataGridVeiculos;
         private System.Windows.Forms.DataGridViewTextBoxColumn placa_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn cidade_veiculo;
@@ -246,5 +240,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Marca_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Modelo_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cor_veiculo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_reserva;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nome_usuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa;
+        private System.Windows.Forms.DataGridViewTextBoxColumn servico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vaga;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_final_uso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subtotal;
     }
 }

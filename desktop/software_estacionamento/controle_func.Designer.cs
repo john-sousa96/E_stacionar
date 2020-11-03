@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btn_corrigir = new System.Windows.Forms.Button();
             this.dataGridControle = new System.Windows.Forms.DataGridView();
             this.tbl_vaga_id_vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,9 +73,13 @@
             this.bt_confirmar_correcao = new System.Windows.Forms.Button();
             this.panel_atualizar = new System.Windows.Forms.Panel();
             this.panel_adicionar_update = new System.Windows.Forms.Panel();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridLivres = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridControle)).BeginInit();
             this.panel_atualizar.SuspendLayout();
             this.panel_adicionar_update.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridLivres)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_corrigir
@@ -92,11 +97,11 @@
             // 
             this.dataGridControle.AllowUserToAddRows = false;
             this.dataGridControle.AllowUserToDeleteRows = false;
-            this.dataGridControle.AllowUserToOrderColumns = true;
             this.dataGridControle.AllowUserToResizeColumns = false;
             this.dataGridControle.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridControle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridControle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridControle.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridControle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridControle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.tbl_vaga_id_vaga,
@@ -109,9 +114,12 @@
             this.timestamp_final_uso,
             this.total});
             this.dataGridControle.Location = new System.Drawing.Point(30, 41);
+            this.dataGridControle.MultiSelect = false;
             this.dataGridControle.Name = "dataGridControle";
-            this.dataGridControle.Size = new System.Drawing.Size(1044, 410);
+            this.dataGridControle.ReadOnly = true;
+            this.dataGridControle.Size = new System.Drawing.Size(1044, 220);
             this.dataGridControle.TabIndex = 3;
+            this.dataGridControle.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridControle_CellFormatting);
             // 
             // tbl_vaga_id_vaga
             // 
@@ -125,12 +133,14 @@
             this.status_vaga.DataPropertyName = "status_vaga";
             this.status_vaga.HeaderText = "status da vaga";
             this.status_vaga.Name = "status_vaga";
+            this.status_vaga.ReadOnly = true;
             // 
             // id_placa_veiculo
             // 
             this.id_placa_veiculo.DataPropertyName = "id_placa_veiculo";
             this.id_placa_veiculo.HeaderText = "Placa do veículo";
             this.id_placa_veiculo.Name = "id_placa_veiculo";
+            this.id_placa_veiculo.ReadOnly = true;
             // 
             // id_nota_fiscal_uso
             // 
@@ -192,6 +202,7 @@
             this.ck_pegar_horario_final.TabIndex = 4;
             this.ck_pegar_horario_final.Text = "pegar hora atual";
             this.ck_pegar_horario_final.UseVisualStyleBackColor = true;
+            this.ck_pegar_horario_final.CheckedChanged += new System.EventHandler(this.ck_pegar_horario_final_CheckedChanged);
             // 
             // ck_pegar_horario_iniclal
             // 
@@ -202,6 +213,7 @@
             this.ck_pegar_horario_iniclal.TabIndex = 3;
             this.ck_pegar_horario_iniclal.Text = "Pegar hora atual";
             this.ck_pegar_horario_iniclal.UseVisualStyleBackColor = true;
+            this.ck_pegar_horario_iniclal.CheckedChanged += new System.EventHandler(this.ck_pegar_horario_iniclal_CheckedChanged);
             // 
             // cb_servico
             // 
@@ -216,8 +228,8 @@
             // 
             this.cb_status.FormattingEnabled = true;
             this.cb_status.Items.AddRange(new object[] {
-            "0 - Disponível",
-            "1 - Ocupado"});
+            "Livre",
+            "Ocupado"});
             this.cb_status.Location = new System.Drawing.Point(136, 101);
             this.cb_status.Name = "cb_status";
             this.cb_status.Size = new System.Drawing.Size(132, 21);
@@ -421,6 +433,7 @@
             this.btn_atualizar_vaga.Text = "CONFIRMAR";
             this.btn_atualizar_vaga.UseVisualStyleBackColor = true;
             this.btn_atualizar_vaga.Visible = false;
+            this.btn_atualizar_vaga.Click += new System.EventHandler(this.btn_atualizar_vaga_Click);
             // 
             // btn_confirmar_novo
             // 
@@ -432,6 +445,7 @@
             this.btn_confirmar_novo.Text = "CONFIRMAR";
             this.btn_confirmar_novo.UseVisualStyleBackColor = true;
             this.btn_confirmar_novo.Visible = false;
+            this.btn_confirmar_novo.Click += new System.EventHandler(this.btn_confirmar_novo_Click);
             // 
             // bt_cancelar_novo
             // 
@@ -467,9 +481,11 @@
             this.bt_confirmar_correcao.Text = "CONFIRMAR";
             this.bt_confirmar_correcao.UseVisualStyleBackColor = true;
             this.bt_confirmar_correcao.Visible = false;
+            this.bt_confirmar_correcao.Click += new System.EventHandler(this.bt_confirmar_correcao_Click);
             // 
             // panel_atualizar
             // 
+            this.panel_atualizar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_atualizar.Controls.Add(this.label1);
             this.panel_atualizar.Controls.Add(this.cb_status);
             this.panel_atualizar.Controls.Add(this.cb_vaga);
@@ -482,6 +498,7 @@
             // 
             // panel_adicionar_update
             // 
+            this.panel_adicionar_update.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel_adicionar_update.Controls.Add(this.label11);
             this.panel_adicionar_update.Controls.Add(this.cb_minutos_final);
             this.panel_adicionar_update.Controls.Add(this.label12);
@@ -506,12 +523,48 @@
             this.panel_adicionar_update.TabIndex = 33;
             this.panel_adicionar_update.Visible = false;
             // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "status_vaga";
+            this.dataGridViewTextBoxColumn2.HeaderText = "status da vaga";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "local_vaga";
+            this.dataGridViewTextBoxColumn1.HeaderText = "vaga";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridLivres
+            // 
+            this.dataGridLivres.AllowUserToAddRows = false;
+            this.dataGridLivres.AllowUserToDeleteRows = false;
+            this.dataGridLivres.AllowUserToResizeColumns = false;
+            this.dataGridLivres.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridLivres.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridLivres.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dataGridLivres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridLivres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridLivres.Location = new System.Drawing.Point(1095, 41);
+            this.dataGridLivres.MultiSelect = false;
+            this.dataGridLivres.Name = "dataGridLivres";
+            this.dataGridLivres.ReadOnly = true;
+            this.dataGridLivres.Size = new System.Drawing.Size(236, 230);
+            this.dataGridLivres.TabIndex = 34;
+            this.dataGridLivres.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridLivres_CellFormatting);
+            // 
             // controle_func
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1112, 927);
+            this.ClientSize = new System.Drawing.Size(1428, 927);
+            this.Controls.Add(this.dataGridLivres);
             this.Controls.Add(this.panel_adicionar_update);
             this.Controls.Add(this.panel_atualizar);
             this.Controls.Add(this.bt_cancelar_correcao);
@@ -535,6 +588,7 @@
             this.panel_atualizar.PerformLayout();
             this.panel_adicionar_update.ResumeLayout(false);
             this.panel_adicionar_update.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridLivres)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -583,5 +637,8 @@
         private System.Windows.Forms.Button bt_confirmar_correcao;
         private System.Windows.Forms.Panel panel_atualizar;
         private System.Windows.Forms.Panel panel_adicionar_update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridView dataGridLivres;
     }
 }
