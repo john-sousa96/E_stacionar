@@ -201,10 +201,10 @@ CREATE TABLE tbl_reservas (
 
 
 CREATE TABLE tbl_uso (
-  id_nota_fiscal_uso numeric(20) NOT NULL identity,
-  tbl_vaga_id_vaga numeric(10) NOT NULL,
-  tbl_token_id_token numeric(10) NOT NULL,
-  tbl_usuario_id_CPF_usuario VARCHAR(11) NOT NULL,
+  id_nota_fiscal_uso numeric(20) NOT NULL identity(1000,1),
+  tbl_vaga_id_vaga numeric(10)  NULL,
+  id_placa_veiculo VARCHAR(8)  NULL,
+  tbl_usuario_id_CPF_usuario VARCHAR(11) NULL,
   tbl_servico_id_servico numeric(10) NOT NULL,
   timestamp_final_uso DATETIME NULL,
   timestamp_inicio_uso DATETIME NULL,
@@ -212,25 +212,17 @@ CREATE TABLE tbl_uso (
   PRIMARY KEY(id_nota_fiscal_uso),
   INDEX tbl_uso_FKIndex1(tbl_usuario_id_CPF_usuario),
   INDEX tbl_uso_FKIndex3(tbl_servico_id_servico),
-  INDEX tbl_uso_FKIndex4(tbl_token_id_token),
+  INDEX tbl_uso_FKIndex4(id_placa_veiculo),
   INDEX tbl_uso_FKIndex5(tbl_vaga_id_vaga),
   FOREIGN KEY(tbl_usuario_id_CPF_usuario)
-    REFERENCES tbl_usuario(id_CPF_usuario)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+    REFERENCES tbl_usuario(id_CPF_usuario),
   FOREIGN KEY(tbl_servico_id_servico)
-    REFERENCES tbl_servico(id_servico)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
-  FOREIGN KEY(tbl_token_id_token)
-    REFERENCES tbl_token(id_token)
-	ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
-      
+    REFERENCES tbl_servico(id_servico),
+  FOREIGN KEY(id_placa_veiculo)
+    REFERENCES tbl_veiculos(id_placa_veiculo),
+   
   FOREIGN KEY(tbl_vaga_id_vaga)
     REFERENCES tbl_vaga(id_vaga)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
 );
 
 
@@ -245,6 +237,16 @@ Select * from tbl_empresa
 
 insert tbl_equipamento (desc_equipamento) values 
 
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'), 
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'),
+('controle de vagas'),
 ('controle de vagas'),
 ('controle de vagas'),
 ('controle de vagas'),
@@ -351,6 +353,12 @@ Select * from tbl_equipamento
 
 insert tbl_vaga (tbl_equipamento_id_equipamento, tbl_estacionamento_id_estacionamento, local_vaga, status_vaga) values 
 
+
+
+
+
+
+
 (2, 14567791234567, 'B1', 1),
 (3, 14567791234567, 'C2', 1),
 (4, 14567791234567, 'A1', 1),
@@ -360,7 +368,12 @@ insert tbl_vaga (tbl_equipamento_id_equipamento, tbl_estacionamento_id_estaciona
 (8, 34567891234569, 'A1', 1),
 (9, 34567891234569, 'B2', 1),
 (10, 34567891234569, 'C3', 1),
-(11, 34567891234502, 'A1', 1)
+(11, 34567891234502, 'A1', 1),
+(12, 14567791234567, 'D1', 1),
+(13, 14567791234567, 'E1', 1),
+(14, 14567791234567, 'F1', 1),
+(15, 14567791234567, 'G1', 1),
+(16, 14567791234567, 'H1', 1)
 
 Select * from tbl_vaga
 
@@ -632,11 +645,13 @@ select * from tbl_reservas where id_reserva
 use bd_estacionamentos
 go
 select * from tbl_funcionario_est
+go
+AAA1234', 1, 'Maria de Souza', 'São Paulo', 'SP', 'Citroen', 'C3', 'vermelho', 1),  
+('BBB4321
+insert tbl_uso (tbl_vaga_id_vaga,  id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, valor_servico_uso) values
 
-insert tbl_uso (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, valor_servico_uso) values
-
-(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(3, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
+(2, 'AAA1234', '00000001234',1, '2020-09-15 18:43:59.953', 10),
+(3, 'BBB4321', '00000001234',1, '2020-09-15 18:43:59.953', 10),
 (4, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
 (5, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
 (6, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
@@ -674,4 +689,132 @@ Select timestamp_inicio_uso, timestamp_final_uso, (DATEDIFF(hour, timestamp_inic
 
 
 select count(*) as permissao from tbl_funcionario_est where id_func=19041996 and permissao = 0
+inner join tbl_estacionamento as E on V.tbl_estacionamento_id_estacionamento = E.id_estacionamento
 
+
+
+Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal
+from tbl_vaga as V  left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico left join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where F.id_func = 1 and U.timestamp_final_uso is null order by V.local_vaga asc 
+
+
+Select * from tbl_funcionario_est
+
+Select Distinct (V.local_vaga), V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
+left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
+left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
+where F.id_func = 1
+
+--Código para usar
+Select V.local_vaga,V.id_vaga,U.id_placa_veiculo, V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso), iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso),U.timestamp_final_uso from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1
+
+
+Select * from tbl_uso
+
+Select V.local_vaga,V.id_vaga, V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
+full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
+full join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
+where F.id_func = 1 
+
+
+Update tbl_vaga set status_vaga = 0  where id_vaga = 2
+
+--RELATÓRIO FUNCIONARIO EM USO
+Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, u.id_placa_veiculo from tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga  where timestamp_final_uso is null
+
+--RELATORIO FUNCIONARIO 24H
+Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, U.id_placa_veiculo from tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
+
+-- RESERVAS
+Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(hour, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * R.valor_servico_reserva) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where datediff(hour, timestamp_final_reserva, CURRENT_TIMESTAMP) <= 24
+
+ 
+if (tbl_vaga.status_vaga = 0)
+	begin 
+		Select Distinct (V.local_vaga), V.status_vaga from tbl_vaga as V left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga where F.id_func = 1  and V.status_vaga = 0 order by V.local_vaga asc
+	end
+else
+	begin 
+		Select Distinct (V.local_vaga), V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
+		left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
+		left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
+	end
+
+	Select * from tbl_uso
+
+	Declare @i int = 194 
+	While @i <= 195
+		Begin 
+			Delete from tbl_uso where id_nota_fiscal_uso = @i
+			set @i = @i+1
+		End
+
+
+
+		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento right join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico left join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1 order by V.local_vaga asc
+
+		update tbl_vaga set status_vaga = 0 where id_vaga in (Select id_vaga from tbl_vaga where local_vaga = 'A1' and tbl_estacionamento_id_estacionamento in (Select tbl_estacionamento_id_estacionamento from tbl_funcionario_est where id_func = 1))
+		update tbl_uso set timestamp_final_uso = CURRENT_TIMESTAMP  where tbl_vaga_id_vaga in (Select id_vaga from tbl_vaga where local_vaga = 'A1' and tbl_estacionamento_id_estacionamento in (Select tbl_estacionamento_id_estacionamento from tbl_funcionario_est where id_func = 1))
+
+		Select Distinct(V.local_vaga) from tbl_vaga as V left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga where F.id_func = 1
+
+		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento full join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  full join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico full join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where (F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1) or (F.id_func = 1  and V.status_vaga = 1) order by V.local_vaga asc
+
+		Select Distinct(S.desc_servico) from tbl_Servico as S left join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento  where F.id_func = 1
+
+		
+
+		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, U.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento full join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  full join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico  where (F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1) or (F.id_func = 1  and V.status_vaga = 1) order by V.local_vaga asc
+
+		Select count(U.id_placa_veiculo) as qtd from tbl_uso as U inner join tbl_vaga as Va on U.tbl_vaga_id_vaga = Va.id_vaga inner join tbl_estacionamento as E on Va.tbl_estacionamento_id_estacionamento = E.id_estacionamento inner join tbl_funcionario_est as F on E.id_estacionamento = F.tbl_estacionamento_id_estacionamento where Va.local_vaga = '" + Vaga + "' and F.id_func = 1 and U.timestamp_final_uso is Null
+
+, @id_servico numeric(10)
+
+		insert tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
+		(vaga)
+		go
+
+			create procedure usp_inserir_manualmente
+			@id_func numeric(15), @vaga varchar(10), @placa varchar(8),@servico varchar(100), @inicio datetime--, @final datetime 
+		As
+			Declare @id_vaga numeric(10) 
+			Select @id_vaga = V.id_vaga from tbl_vaga as V inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where local_vaga = @vaga and F.id_func = @id_func 
+			
+			Declare @id_servico numeric(10)
+			Select @id_servico = S.id_servico from tbl_servico as S inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where S.desc_servico like @servico and F.id_func = @id_func
+			
+			
+
+			insert tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_servico_id_servico, timestamp_inicio_uso)values--, timestamp_final_uso) 
+			(@id_vaga,@placa,@id_servico,@inicio)--,@final)
+			update tbl_vaga set status_vaga = 1 where id_vaga = @id_vaga
+			go
+			exec usp_inserir_manualmente 1,'B1','BBB4321','estacionar em vaga descoberta', '2020-09-15 18:43'
+
+			Select * from tbl_uso
+
+			Select Distinct (V.local_vaga), V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_placa_veiculo) as id_placa_veiculo, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso ,iif(U.timestamp_final_uso is not null,null,U.timestamp_final_uso) as timestamp_final_uso from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1	
+			go
+			
+			-- Procedure para botão corrigir
+				create procedure usp_corrigir
+				@id_func numeric(15), @notaFiscal numeric(20), @vaga varchar(10) , @placa varchar(8),@servico varchar(100), @inicio datetime, @final datetime
+				As
+				Declare @id_vaga numeric(10) 
+				Select @id_vaga = V.id_vaga from tbl_vaga as V inner join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga where  U.id_nota_fiscal_uso = @notaFiscal
+				
+				Declare @nova_vaga numeric(10) 
+				
+				Select @nova_vaga  = V.id_vaga from tbl_vaga as V inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where local_vaga = @vaga and F.id_func = @id_func 
+				Declare @id_servico numeric(10)
+				Select @id_servico = S.id_servico from tbl_servico as S inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where S.desc_servico like @servico and F.id_func = @id_func
+				update tbl_uso set tbl_vaga_id_vaga = @nova_vaga, id_placa_veiculo = @placa, tbl_servico_id_servico = @id_servico, timestamp_inicio_uso = @inicio, timestamp_final_uso = @final where id_nota_fiscal_uso = @notaFiscal
+				if @id_vaga <> @nova_vaga
+					begin 
+						update tbl_vaga set status_vaga = 0 where id_vaga = @id_vaga
+						update tbl_vaga set status_vaga = 1 where id_vaga = @nova_vaga
+					end
+				go
+				exec usp_corrigir 1, 1002,'B2','BBB4321', 'estacionar em vaga descoberta', '2020-11-02 20:20','2020-11-02 20:26'
+
+
+				Select * from tbl_uso 
