@@ -80,6 +80,11 @@ CREATE TABLE tbl_estacionamento (
       ON DELETE NO ACTION
 	  );
 
+Alter table tbl_estacionamento
+add lat_est varchar(30),
+lng_est varchar(30)
+
+
 CREATE TABLE tbl_funcionario_est (
   id_func numeric(15) NOT NULL identity,
   tbl_estacionamento_id_estacionamento numeric(15) NOT NULL,
