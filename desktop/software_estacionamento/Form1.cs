@@ -90,11 +90,18 @@ namespace software_estacionamento
                 }
         }
 
+        private void txt_user_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)||Char.IsWhiteSpace(e.KeyChar)||char.IsNumber(e.KeyChar)==false)
+            {
+                e.Handled = true;
+                MessageBox.Show("Por favor, digite apenas números, sem espaços!");
+            }
+        }
 
+        private void txt_user_TextChanged(object sender, EventArgs e)
+        {
 
-
-        
-
-        
+        }
     }
 }

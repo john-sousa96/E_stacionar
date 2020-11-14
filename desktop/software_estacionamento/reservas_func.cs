@@ -50,8 +50,12 @@ namespace software_estacionamento
 
         private void btn_Consultar_Veiculo_Click(object sender, EventArgs e)
         {
-            String Placa;
-            Placa = dataGridView1.CurrentCell.Value.ToString();
+            int selectedrowindex = dataGridView1.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridView1.Rows[selectedrowindex];
+            String p;
+
+            p = Convert.ToString(selectedRow.Cells["id_placa_veiculo"].Value);
+            MessageBox.Show(p);
 
             dataGridVeiculos.Visible = true;
 
@@ -65,7 +69,7 @@ namespace software_estacionamento
                     DataSet dt = new DataSet();
                     c.connect();
 
-                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + Placa + "'";
+                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + p + "'";
                     c.command.CommandText = sql;
                     dAdapter.SelectCommand = c.command;
                     dAdapter.Fill(dt);

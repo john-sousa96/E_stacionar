@@ -46,13 +46,14 @@ namespace software_estacionamento
                     if (selectedIndex == 1)
                     {
                         btn_Consultar_Veiculo.Visible = true;
-                        sql = "Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, u.id_placa_veiculo from tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga  where timestamp_final_uso is null";
+                        sql = "Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, u.id_placa_veiculo from tbl_uso as U full join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga  where timestamp_final_uso is null";
                         c.command.CommandText = sql;
 
                         dAdapter.SelectCommand = c.command;
                         dAdapter.Fill(dt);
                         c.fechaConexao();
                         dataGridRelatorio.DataSource = dt.Tables[0];
+                       
                     }
                     else
                     {
@@ -82,19 +83,15 @@ namespace software_estacionamento
 
         private void btn_Consultar_Veiculo_Click(object sender, EventArgs e)
         {
-            DataTable dataGridTable =
-            (DataTable)dataGridRelatorio.DataSource;
+            int selectedrowindex = dataGridRelatorio.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridRelatorio.Rows[selectedrowindex];
+            String p;
+                         
+            p = Convert.ToString(selectedRow.Cells["id_placa_veiculo"].Value);
+            MessageBox.Show(p);
 
-            // Set the current row using the RowNumber
-            // property of the CurrentCell.
-            DataRow currentRow = dataGridTable.Rows[dataGridRelatorio.CurrentCell.RowIndex];
-            DataColumn column = dataGridTable.Columns[0];
-
-            // Get the value of the column 1 in the DataTable.
-            Console.WriteLine(currentRow[column, DataRowVersion.Current]);
-            String Placa;
-            Placa = dataGridRelatorio.CurrentCell.Value.ToString();
-
+                      
+          
             dataGridVeiculos.Visible = true;
 
             conexao c = new conexao();
@@ -107,7 +104,7 @@ namespace software_estacionamento
                     DataSet dt = new DataSet();
                     c.connect();
 
-                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + Placa + "'";
+                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + p + "'";
                     c.command.CommandText = sql;
                     dAdapter.SelectCommand = c.command;
                     dAdapter.Fill(dt);
@@ -125,6 +122,7 @@ namespace software_estacionamento
         private void dataGridRelatorio_SelectionChanged(object sender, EventArgs e)
         {
             dataGridVeiculos.Visible = false;
+            btn_Consultar_Veiculo.Enabled = true;
            
         }
     }

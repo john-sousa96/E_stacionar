@@ -50,7 +50,7 @@ namespace software_estacionamento
 
 
 
-                    sql = "Select Distinct (V.local_vaga), V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_placa_veiculo) as id_placa_veiculo, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso ,iif(U.timestamp_final_uso is not null,null,U.timestamp_final_uso) as timestamp_final_uso from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1";
+                    sql = "Select V.local_vaga, U.id_placa_veiculo, V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso, iif(U.timestamp_final_uso is not null,null,S.desc_servico) as desc_servico from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1 order by local_vaga";
                     c.command.CommandText = sql;
 
                     dAdapter.SelectCommand = c.command;
@@ -174,6 +174,7 @@ namespace software_estacionamento
             cb_minutos_final.Enabled = false;
             cb_hora_final.Enabled = false;
             ck_pegar_horario_final.Enabled = false;
+            ck_uso.Enabled = false;
             
             fillcombox();
             fillcomboxServico();
@@ -215,6 +216,7 @@ namespace software_estacionamento
             cb_minutos_final.Enabled = true;
             cb_hora_final.Enabled = true;
             ck_pegar_horario_final.Enabled = true;
+            ck_uso.Enabled = true;
         }
 
         private void bt_cancelar_correcao_Click(object sender, EventArgs e)
@@ -336,7 +338,7 @@ namespace software_estacionamento
 
                             }
 
-
+                            MessageBox.Show("Status da vaga foi atualizado!");
 
 
                         }
@@ -457,8 +459,8 @@ namespace software_estacionamento
                             HorarioInicial = Date + " " + hora1 + ":" + minutos1;
 
                         }
-                        MessageBox.Show(HorarioInicial);
-                        MessageBox.Show("exec usp_inserir_manualmente 1," + vaga + "," + Placa + "," + servico + "," + HorarioInicial  );
+                       
+                       
                         SqlDataAdapter dAdapter = new SqlDataAdapter();
                         DataSet dt = new DataSet();
                         c.connect();
@@ -467,6 +469,8 @@ namespace software_estacionamento
                         c.fechaConexao();
                         Carregar();
                         CarregarLivres();
+                        MessageBox.Show("Dados inseridos com sucesso");
+                        
 
 
 
@@ -518,6 +522,7 @@ namespace software_estacionamento
             }
             else
             {*/
+
                 conexao c = new conexao();
 
                 if (c.connect() == true)
@@ -525,10 +530,14 @@ namespace software_estacionamento
 
                     try
                     {
+                        int selectedrowindex = dataGridControle.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedRow = dataGridControle.Rows[selectedrowindex];
+                        String nota;
 
-                        int NotaFiscal;
-                        //NotaFiscal = Convert.ToInt32(dataGridControle.SelectedRows[0].Cells[3].Value);
-                        NotaFiscal = Convert.ToInt32(dataGridControle.CurrentCell.Value);
+                         nota = Convert.ToString(selectedRow.Cells["id_nota_fiscal_uso"].Value);
+
+                        
+                        
                         String placa;
                         placa = txt_placa.Text.Trim();
                         String HorarioInicial;
@@ -582,10 +591,14 @@ namespace software_estacionamento
                         c.connect();
                         SqlDataAdapter dAdapter = new SqlDataAdapter();
                         DataSet dt = new DataSet();
-
-                        c.command.CommandText = "exec usp_corrigir 1,"+ NotaFiscal +",'" + vaga + "', '" + placa + "', '" + servico + "', '" + HorarioInicial + "','" +horarioFinal+"'";
-
-
+                        
+                        if(ck_uso.Checked==true)
+                        {
+                            c.command.CommandText = "exec usp_corrigir_parcialmente 1," + nota + ",'" + vaga + "', '" + placa + "', '" + servico + "', '" + HorarioInicial + "'";
+                        } else
+                        { 
+                            c.command.CommandText = "exec usp_corrigir 1,"+ nota +",'" + vaga + "', '" + placa + "', '" + servico + "', '" + HorarioInicial + "','" +horarioFinal+"'";
+                        }
                         c.command.ExecuteNonQuery();
 
                         c.fechaConexao();
@@ -601,6 +614,23 @@ namespace software_estacionamento
 
             //}
 
+        }
+
+        private void ck_uso_CheckedChanged(object sender, EventArgs e)
+        {
+            if(ck_uso.Checked==true)
+            {
+                cb_minutos_final.Enabled = false;
+                cb_hora_final.Enabled = false;
+                ck_pegar_horario_final.Enabled = false;
+
+            }
+            else
+            {
+                cb_minutos_final.Enabled = true;
+                cb_hora_final.Enabled = true;
+                ck_pegar_horario_final.Enabled = true;
+            }
         }
     }
 }

@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controle_func));
             this.btn_corrigir = new System.Windows.Forms.Button();
             this.dataGridControle = new System.Windows.Forms.DataGridView();
-            this.tbl_vaga_id_vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status_vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_nota_fiscal_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tbl_servico_id_servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timestamp_final_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txt_placa = new System.Windows.Forms.TextBox();
             this.ck_pegar_horario_final = new System.Windows.Forms.CheckBox();
             this.ck_pegar_horario_iniclal = new System.Windows.Forms.CheckBox();
@@ -73,9 +65,16 @@
             this.bt_confirmar_correcao = new System.Windows.Forms.Button();
             this.panel_atualizar = new System.Windows.Forms.Panel();
             this.panel_adicionar_update = new System.Windows.Forms.Panel();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridLivres = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbl_vaga_id_vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status_vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_nota_fiscal_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbl_servico_id_servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ck_uso = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridControle)).BeginInit();
             this.panel_atualizar.SuspendLayout();
             this.panel_adicionar_update.SuspendLayout();
@@ -99,8 +98,8 @@
             this.dataGridControle.AllowUserToDeleteRows = false;
             this.dataGridControle.AllowUserToResizeColumns = false;
             this.dataGridControle.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridControle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridControle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridControle.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridControle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridControle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -108,83 +107,16 @@
             this.status_vaga,
             this.id_placa_veiculo,
             this.id_nota_fiscal_uso,
-            this.valor,
             this.tbl_servico_id_servico,
-            this.timestamp_inicio_uso,
-            this.timestamp_final_uso,
-            this.total});
+            this.timestamp_inicio_uso});
             this.dataGridControle.Location = new System.Drawing.Point(30, 41);
             this.dataGridControle.MultiSelect = false;
             this.dataGridControle.Name = "dataGridControle";
             this.dataGridControle.ReadOnly = true;
-            this.dataGridControle.Size = new System.Drawing.Size(1044, 220);
-            this.dataGridControle.TabIndex = 3;
+            this.dataGridControle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridControle.Size = new System.Drawing.Size(745, 220);
+            this.dataGridControle.TabIndex = 0;
             this.dataGridControle.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridControle_CellFormatting);
-            // 
-            // tbl_vaga_id_vaga
-            // 
-            this.tbl_vaga_id_vaga.DataPropertyName = "local_vaga";
-            this.tbl_vaga_id_vaga.HeaderText = "vaga";
-            this.tbl_vaga_id_vaga.Name = "tbl_vaga_id_vaga";
-            this.tbl_vaga_id_vaga.ReadOnly = true;
-            // 
-            // status_vaga
-            // 
-            this.status_vaga.DataPropertyName = "status_vaga";
-            this.status_vaga.HeaderText = "status da vaga";
-            this.status_vaga.Name = "status_vaga";
-            this.status_vaga.ReadOnly = true;
-            // 
-            // id_placa_veiculo
-            // 
-            this.id_placa_veiculo.DataPropertyName = "id_placa_veiculo";
-            this.id_placa_veiculo.HeaderText = "Placa do veículo";
-            this.id_placa_veiculo.Name = "id_placa_veiculo";
-            this.id_placa_veiculo.ReadOnly = true;
-            // 
-            // id_nota_fiscal_uso
-            // 
-            this.id_nota_fiscal_uso.DataPropertyName = "id_nota_fiscal_uso";
-            this.id_nota_fiscal_uso.HeaderText = "Nota fiscal";
-            this.id_nota_fiscal_uso.Name = "id_nota_fiscal_uso";
-            this.id_nota_fiscal_uso.ReadOnly = true;
-            this.id_nota_fiscal_uso.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // valor
-            // 
-            this.valor.DataPropertyName = "valor_servico_uso";
-            this.valor.HeaderText = "Valor do Serviço";
-            this.valor.Name = "valor";
-            this.valor.ReadOnly = true;
-            // 
-            // tbl_servico_id_servico
-            // 
-            this.tbl_servico_id_servico.DataPropertyName = "desc_servico";
-            this.tbl_servico_id_servico.HeaderText = "Serviço";
-            this.tbl_servico_id_servico.Name = "tbl_servico_id_servico";
-            this.tbl_servico_id_servico.ReadOnly = true;
-            this.tbl_servico_id_servico.Width = 200;
-            // 
-            // timestamp_inicio_uso
-            // 
-            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_uso";
-            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
-            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
-            this.timestamp_inicio_uso.ReadOnly = true;
-            // 
-            // timestamp_final_uso
-            // 
-            this.timestamp_final_uso.DataPropertyName = "timestamp_final_uso";
-            this.timestamp_final_uso.HeaderText = "horario final";
-            this.timestamp_final_uso.Name = "timestamp_final_uso";
-            this.timestamp_final_uso.ReadOnly = true;
-            // 
-            // total
-            // 
-            this.total.DataPropertyName = "subtotal";
-            this.total.HeaderText = "total";
-            this.total.Name = "total";
-            this.total.ReadOnly = true;
             // 
             // txt_placa
             // 
@@ -196,7 +128,7 @@
             // ck_pegar_horario_final
             // 
             this.ck_pegar_horario_final.AutoSize = true;
-            this.ck_pegar_horario_final.Location = new System.Drawing.Point(646, 138);
+            this.ck_pegar_horario_final.Location = new System.Drawing.Point(642, 120);
             this.ck_pegar_horario_final.Name = "ck_pegar_horario_final";
             this.ck_pegar_horario_final.Size = new System.Drawing.Size(103, 17);
             this.ck_pegar_horario_final.TabIndex = 4;
@@ -207,7 +139,7 @@
             // ck_pegar_horario_iniclal
             // 
             this.ck_pegar_horario_iniclal.AutoSize = true;
-            this.ck_pegar_horario_iniclal.Location = new System.Drawing.Point(480, 138);
+            this.ck_pegar_horario_iniclal.Location = new System.Drawing.Point(467, 120);
             this.ck_pegar_horario_iniclal.Name = "ck_pegar_horario_iniclal";
             this.ck_pegar_horario_iniclal.Size = new System.Drawing.Size(104, 17);
             this.ck_pegar_horario_iniclal.TabIndex = 3;
@@ -217,6 +149,7 @@
             // 
             // cb_servico
             // 
+            this.cb_servico.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_servico.FormattingEnabled = true;
             this.cb_servico.Location = new System.Drawing.Point(204, 96);
             this.cb_servico.Name = "cb_servico";
@@ -226,6 +159,7 @@
             // 
             // cb_status
             // 
+            this.cb_status.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_status.FormattingEnabled = true;
             this.cb_status.Items.AddRange(new object[] {
             "Livre",
@@ -237,7 +171,9 @@
             // 
             // cb_vaga
             // 
+            this.cb_vaga.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_vaga.FormattingEnabled = true;
+            this.cb_vaga.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cb_vaga.Location = new System.Drawing.Point(22, 101);
             this.cb_vaga.Name = "cb_vaga";
             this.cb_vaga.Size = new System.Drawing.Size(108, 21);
@@ -327,6 +263,7 @@
             // 
             // cb_hora_inicial
             // 
+            this.cb_hora_inicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_hora_inicial.FormattingEnabled = true;
             this.cb_hora_inicial.Location = new System.Drawing.Point(451, 93);
             this.cb_hora_inicial.Name = "cb_hora_inicial";
@@ -335,6 +272,7 @@
             // 
             // cb_minuto_inicial
             // 
+            this.cb_minuto_inicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_minuto_inicial.FormattingEnabled = true;
             this.cb_minuto_inicial.Location = new System.Drawing.Point(519, 93);
             this.cb_minuto_inicial.Name = "cb_minuto_inicial";
@@ -361,6 +299,7 @@
             // 
             // cb_minutos_final
             // 
+            this.cb_minutos_final.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_minutos_final.FormattingEnabled = true;
             this.cb_minutos_final.Location = new System.Drawing.Point(689, 92);
             this.cb_minutos_final.Name = "cb_minutos_final";
@@ -369,6 +308,7 @@
             // 
             // cb_hora_final
             // 
+            this.cb_hora_final.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_hora_final.FormattingEnabled = true;
             this.cb_hora_final.Location = new System.Drawing.Point(621, 92);
             this.cb_hora_final.Name = "cb_hora_final";
@@ -499,6 +439,7 @@
             // panel_adicionar_update
             // 
             this.panel_adicionar_update.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_adicionar_update.Controls.Add(this.ck_uso);
             this.panel_adicionar_update.Controls.Add(this.label11);
             this.panel_adicionar_update.Controls.Add(this.cb_minutos_final);
             this.panel_adicionar_update.Controls.Add(this.label12);
@@ -523,12 +464,26 @@
             this.panel_adicionar_update.TabIndex = 33;
             this.panel_adicionar_update.Visible = false;
             // 
-            // dataGridViewTextBoxColumn2
+            // dataGridLivres
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "status_vaga";
-            this.dataGridViewTextBoxColumn2.HeaderText = "status da vaga";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridLivres.AllowUserToAddRows = false;
+            this.dataGridLivres.AllowUserToDeleteRows = false;
+            this.dataGridLivres.AllowUserToResizeColumns = false;
+            this.dataGridLivres.AllowUserToResizeRows = false;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridLivres.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridLivres.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dataGridLivres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridLivres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridLivres.Location = new System.Drawing.Point(781, 41);
+            this.dataGridLivres.MultiSelect = false;
+            this.dataGridLivres.Name = "dataGridLivres";
+            this.dataGridLivres.ReadOnly = true;
+            this.dataGridLivres.Size = new System.Drawing.Size(252, 220);
+            this.dataGridLivres.TabIndex = 34;
+            this.dataGridLivres.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridLivres_CellFormatting);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -536,27 +491,70 @@
             this.dataGridViewTextBoxColumn1.HeaderText = "vaga";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 105;
             // 
-            // dataGridLivres
+            // dataGridViewTextBoxColumn2
             // 
-            this.dataGridLivres.AllowUserToAddRows = false;
-            this.dataGridLivres.AllowUserToDeleteRows = false;
-            this.dataGridLivres.AllowUserToResizeColumns = false;
-            this.dataGridLivres.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridLivres.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridLivres.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dataGridLivres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridLivres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2});
-            this.dataGridLivres.Location = new System.Drawing.Point(1095, 41);
-            this.dataGridLivres.MultiSelect = false;
-            this.dataGridLivres.Name = "dataGridLivres";
-            this.dataGridLivres.ReadOnly = true;
-            this.dataGridLivres.Size = new System.Drawing.Size(236, 230);
-            this.dataGridLivres.TabIndex = 34;
-            this.dataGridLivres.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridLivres_CellFormatting);
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "status_vaga";
+            this.dataGridViewTextBoxColumn2.HeaderText = "status da vaga";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 103;
+            // 
+            // tbl_vaga_id_vaga
+            // 
+            this.tbl_vaga_id_vaga.DataPropertyName = "local_vaga";
+            this.tbl_vaga_id_vaga.HeaderText = "vaga";
+            this.tbl_vaga_id_vaga.Name = "tbl_vaga_id_vaga";
+            this.tbl_vaga_id_vaga.ReadOnly = true;
+            // 
+            // status_vaga
+            // 
+            this.status_vaga.DataPropertyName = "status_vaga";
+            this.status_vaga.HeaderText = "status da vaga";
+            this.status_vaga.Name = "status_vaga";
+            this.status_vaga.ReadOnly = true;
+            // 
+            // id_placa_veiculo
+            // 
+            this.id_placa_veiculo.DataPropertyName = "id_placa_veiculo";
+            this.id_placa_veiculo.HeaderText = "Placa do veículo";
+            this.id_placa_veiculo.Name = "id_placa_veiculo";
+            this.id_placa_veiculo.ReadOnly = true;
+            // 
+            // id_nota_fiscal_uso
+            // 
+            this.id_nota_fiscal_uso.DataPropertyName = "id_nota_fiscal_uso";
+            this.id_nota_fiscal_uso.HeaderText = "Nota fiscal";
+            this.id_nota_fiscal_uso.Name = "id_nota_fiscal_uso";
+            this.id_nota_fiscal_uso.ReadOnly = true;
+            this.id_nota_fiscal_uso.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // tbl_servico_id_servico
+            // 
+            this.tbl_servico_id_servico.DataPropertyName = "desc_servico";
+            this.tbl_servico_id_servico.HeaderText = "Serviço";
+            this.tbl_servico_id_servico.Name = "tbl_servico_id_servico";
+            this.tbl_servico_id_servico.ReadOnly = true;
+            this.tbl_servico_id_servico.Width = 200;
+            // 
+            // timestamp_inicio_uso
+            // 
+            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_uso";
+            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
+            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
+            this.timestamp_inicio_uso.ReadOnly = true;
+            // 
+            // ck_uso
+            // 
+            this.ck_uso.AutoSize = true;
+            this.ck_uso.Location = new System.Drawing.Point(642, 138);
+            this.ck_uso.Name = "ck_uso";
+            this.ck_uso.Size = new System.Drawing.Size(90, 17);
+            this.ck_uso.TabIndex = 26;
+            this.ck_uso.Text = "Ainda em uso";
+            this.ck_uso.UseVisualStyleBackColor = true;
+            this.ck_uso.CheckedChanged += new System.EventHandler(this.ck_uso_CheckedChanged);
             // 
             // controle_func
             // 
@@ -577,6 +575,7 @@
             this.Controls.Add(this.btn_update_status_vaga);
             this.Controls.Add(this.dataGridControle);
             this.Controls.Add(this.btn_corrigir);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "controle_func";
@@ -596,15 +595,6 @@
         #endregion
         private System.Windows.Forms.Button btn_corrigir;
         private System.Windows.Forms.DataGridView dataGridControle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tbl_vaga_id_vaga;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status_vaga;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa_veiculo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_nota_fiscal_uso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tbl_servico_id_servico;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_final_uso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total;
         private System.Windows.Forms.TextBox txt_placa;
         private System.Windows.Forms.CheckBox ck_pegar_horario_final;
         private System.Windows.Forms.CheckBox ck_pegar_horario_iniclal;
@@ -637,8 +627,15 @@
         private System.Windows.Forms.Button bt_confirmar_correcao;
         private System.Windows.Forms.Panel panel_atualizar;
         private System.Windows.Forms.Panel panel_adicionar_update;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridView dataGridLivres;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tbl_vaga_id_vaga;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status_vaga;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa_veiculo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_nota_fiscal_uso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tbl_servico_id_servico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;
+        private System.Windows.Forms.CheckBox ck_uso;
     }
 }

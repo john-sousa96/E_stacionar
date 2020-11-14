@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form_login));
             this.lbl_user_login = new System.Windows.Forms.Label();
             this.lbl_senha_login = new System.Windows.Forms.Label();
             this.txt_user = new System.Windows.Forms.TextBox();
@@ -62,6 +63,8 @@
             this.txt_user.Name = "txt_user";
             this.txt_user.Size = new System.Drawing.Size(220, 26);
             this.txt_user.TabIndex = 2;
+            this.txt_user.TextChanged += new System.EventHandler(this.txt_user_TextChanged);
+            this.txt_user.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_user_KeyPress);
             // 
             // txt_senha
             // 
@@ -89,13 +92,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(392, 288);
-            this.ControlBox = false;
             this.Controls.Add(this.btn_acessar);
             this.Controls.Add(this.txt_senha);
             this.Controls.Add(this.txt_user);
             this.Controls.Add(this.lbl_senha_login);
             this.Controls.Add(this.lbl_user_login);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "form_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

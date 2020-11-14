@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(reservas_func));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn_Consultar_Veiculo = new System.Windows.Forms.Button();
@@ -40,13 +41,13 @@
             this.Modelo_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cor_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_reserva = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nome_usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_placa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timestamp_final_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nome_usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridVeiculos)).BeginInit();
             this.SuspendLayout();
@@ -66,17 +67,19 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id_reserva,
-            this.nome_usuario,
             this.id_placa,
             this.servico,
             this.vaga,
             this.timestamp_inicio_uso,
             this.timestamp_final_uso,
-            this.subtotal});
+            this.subtotal,
+            this.nome_usuario});
             this.dataGridView1.Location = new System.Drawing.Point(91, 146);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1193, 361);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btn_Consultar_Veiculo
@@ -158,6 +161,50 @@
             this.id_reserva.DataPropertyName = "id_reserva";
             this.id_reserva.HeaderText = "Reserva";
             this.id_reserva.Name = "id_reserva";
+            this.id_reserva.ReadOnly = true;
+            // 
+            // id_placa
+            // 
+            this.id_placa.DataPropertyName = "id_placa_veiculo";
+            this.id_placa.HeaderText = "Placa do veículo";
+            this.id_placa.Name = "id_placa";
+            this.id_placa.ReadOnly = true;
+            // 
+            // servico
+            // 
+            this.servico.DataPropertyName = "desc_servico";
+            this.servico.HeaderText = "Serviço";
+            this.servico.Name = "servico";
+            this.servico.ReadOnly = true;
+            this.servico.Width = 200;
+            // 
+            // vaga
+            // 
+            this.vaga.DataPropertyName = "local_vaga";
+            this.vaga.HeaderText = "vaga";
+            this.vaga.Name = "vaga";
+            this.vaga.ReadOnly = true;
+            // 
+            // timestamp_inicio_uso
+            // 
+            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_reserva";
+            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
+            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
+            this.timestamp_inicio_uso.ReadOnly = true;
+            // 
+            // timestamp_final_uso
+            // 
+            this.timestamp_final_uso.DataPropertyName = "timestamp_final_reserva";
+            this.timestamp_final_uso.HeaderText = "hora final";
+            this.timestamp_final_uso.Name = "timestamp_final_uso";
+            this.timestamp_final_uso.ReadOnly = true;
+            // 
+            // subtotal
+            // 
+            this.subtotal.DataPropertyName = "subtotal";
+            this.subtotal.HeaderText = "Subtotal";
+            this.subtotal.Name = "subtotal";
+            this.subtotal.ReadOnly = true;
             // 
             // nome_usuario
             // 
@@ -167,43 +214,6 @@
             this.nome_usuario.Name = "nome_usuario";
             this.nome_usuario.ReadOnly = true;
             this.nome_usuario.Width = 350;
-            // 
-            // id_placa
-            // 
-            this.id_placa.DataPropertyName = "id_placa_veiculo";
-            this.id_placa.HeaderText = "Placa do veículo";
-            this.id_placa.Name = "id_placa";
-            // 
-            // servico
-            // 
-            this.servico.DataPropertyName = "desc_servico";
-            this.servico.HeaderText = "Serviço";
-            this.servico.Name = "servico";
-            this.servico.Width = 200;
-            // 
-            // vaga
-            // 
-            this.vaga.DataPropertyName = "local_vaga";
-            this.vaga.HeaderText = "vaga";
-            this.vaga.Name = "vaga";
-            // 
-            // timestamp_inicio_uso
-            // 
-            this.timestamp_inicio_uso.DataPropertyName = "timestamp_inicio_reserva";
-            this.timestamp_inicio_uso.HeaderText = "Hora inicial";
-            this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
-            // 
-            // timestamp_final_uso
-            // 
-            this.timestamp_final_uso.DataPropertyName = "timestamp_final_reserva";
-            this.timestamp_final_uso.HeaderText = "hora final";
-            this.timestamp_final_uso.Name = "timestamp_final_uso";
-            // 
-            // subtotal
-            // 
-            this.subtotal.DataPropertyName = "subtotal";
-            this.subtotal.HeaderText = "Subtotal";
-            this.subtotal.Name = "subtotal";
             // 
             // reservas_func
             // 
@@ -215,6 +225,7 @@
             this.Controls.Add(this.btn_Consultar_Veiculo);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dateTimePicker1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "reservas_func";
@@ -241,12 +252,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Modelo_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cor_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_reserva;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nome_usuario;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_placa;
         private System.Windows.Forms.DataGridViewTextBoxColumn servico;
         private System.Windows.Forms.DataGridViewTextBoxColumn vaga;
         private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;
         private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_final_uso;
         private System.Windows.Forms.DataGridViewTextBoxColumn subtotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nome_usuario;
     }
 }

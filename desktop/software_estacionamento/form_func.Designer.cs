@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form_func));
             this.menu_func = new System.Windows.Forms.MenuStrip();
             this.menu_relatorio_item = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_reservas_item = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,14 +92,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1248, 791);
             this.Controls.Add(this.menu_func);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menu_func;
             this.MinimizeBox = false;
             this.Name = "form_func";
-            this.ShowIcon = false;
             this.Text = "CONTROLE DO ESTACIONAMENTO";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menu_func.ResumeLayout(false);
