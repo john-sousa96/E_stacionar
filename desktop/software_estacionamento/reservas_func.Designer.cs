@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(reservas_func));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -41,7 +45,7 @@
             this.Modelo_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cor_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id_reserva = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_placa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_placa_veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servico = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vaga = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timestamp_inicio_uso = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,16 +68,32 @@
             // 
             // dataGridView1
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id_reserva,
-            this.id_placa,
+            this.id_placa_veiculo,
             this.servico,
             this.vaga,
             this.timestamp_inicio_uso,
             this.timestamp_final_uso,
             this.subtotal,
             this.nome_usuario});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Location = new System.Drawing.Point(91, 146);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -95,6 +115,14 @@
             // 
             // dataGridVeiculos
             // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridVeiculos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridVeiculos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridVeiculos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.placa_veiculo,
@@ -104,6 +132,14 @@
             this.Marca_veiculo,
             this.Modelo_veiculo,
             this.Cor_veiculo});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridVeiculos.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridVeiculos.Location = new System.Drawing.Point(91, 539);
             this.dataGridVeiculos.Name = "dataGridVeiculos";
             this.dataGridVeiculos.Size = new System.Drawing.Size(1193, 74);
@@ -126,7 +162,7 @@
             // Estado_veiculo
             // 
             this.Estado_veiculo.DataPropertyName = "Estado_veiculo";
-            this.Estado_veiculo.HeaderText = "Estado";
+            this.Estado_veiculo.HeaderText = "UF";
             this.Estado_veiculo.Name = "Estado_veiculo";
             this.Estado_veiculo.Width = 50;
             // 
@@ -163,12 +199,12 @@
             this.id_reserva.Name = "id_reserva";
             this.id_reserva.ReadOnly = true;
             // 
-            // id_placa
+            // id_placa_veiculo
             // 
-            this.id_placa.DataPropertyName = "id_placa_veiculo";
-            this.id_placa.HeaderText = "Placa do veículo";
-            this.id_placa.Name = "id_placa";
-            this.id_placa.ReadOnly = true;
+            this.id_placa_veiculo.DataPropertyName = "id_placa_veiculo";
+            this.id_placa_veiculo.HeaderText = "Placa do veículo";
+            this.id_placa_veiculo.Name = "id_placa_veiculo";
+            this.id_placa_veiculo.ReadOnly = true;
             // 
             // servico
             // 
@@ -191,6 +227,7 @@
             this.timestamp_inicio_uso.HeaderText = "Hora inicial";
             this.timestamp_inicio_uso.Name = "timestamp_inicio_uso";
             this.timestamp_inicio_uso.ReadOnly = true;
+            this.timestamp_inicio_uso.Width = 175;
             // 
             // timestamp_final_uso
             // 
@@ -198,6 +235,7 @@
             this.timestamp_final_uso.HeaderText = "hora final";
             this.timestamp_final_uso.Name = "timestamp_final_uso";
             this.timestamp_final_uso.ReadOnly = true;
+            this.timestamp_final_uso.Width = 175;
             // 
             // subtotal
             // 
@@ -213,13 +251,14 @@
             this.nome_usuario.HeaderText = "Nome cliente";
             this.nome_usuario.Name = "nome_usuario";
             this.nome_usuario.ReadOnly = true;
-            this.nome_usuario.Width = 350;
+            this.nome_usuario.Width = 200;
             // 
             // reservas_func
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1356, 739);
             this.Controls.Add(this.dataGridVeiculos);
             this.Controls.Add(this.btn_Consultar_Veiculo);
@@ -229,9 +268,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "reservas_func";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reservas";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridVeiculos)).EndInit();
             this.ResumeLayout(false);
@@ -252,7 +290,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Modelo_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cor_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_reserva;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id_placa_veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn servico;
         private System.Windows.Forms.DataGridViewTextBoxColumn vaga;
         private System.Windows.Forms.DataGridViewTextBoxColumn timestamp_inicio_uso;

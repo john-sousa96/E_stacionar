@@ -50,7 +50,7 @@ namespace software_estacionamento
 
 
 
-                    sql = "Select V.local_vaga, U.id_placa_veiculo, V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso, iif(U.timestamp_final_uso is not null,null,S.desc_servico) as desc_servico from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1 order by local_vaga";
+                    sql = "Select V.local_vaga, iif(U.timestamp_final_uso is not null,null,U.id_placa_veiculo) as id_placa_veiculo , V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso, iif(U.timestamp_final_uso is not null,null,S.desc_servico) as desc_servico from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1 order by local_vaga";
                     c.command.CommandText = sql;
 
                     dAdapter.SelectCommand = c.command;
@@ -119,6 +119,12 @@ namespace software_estacionamento
             btn_adicionar_uso.Visible = false;
             btn_corrigir.Visible = false;
             btn_update_status_vaga.Visible = false;
+            ck_uso.Enabled = true;
+            cb_status.Enabled = false;
+
+            cb_minutos_final.Enabled = true;
+            cb_hora_final.Enabled = true;
+            ck_pegar_horario_final.Enabled = true;
 
             fillcomboxServico();
 
@@ -150,13 +156,12 @@ namespace software_estacionamento
             panel_atualizar.Visible = true;
             btn_atualizar_vaga.Visible = true;
             btn_cancelar_status.Visible = true;
+            cb_vaga.Enabled = true;
 
             btn_adicionar_uso.Visible = false;
             btn_corrigir.Visible = false;
             btn_update_status_vaga.Visible = false;
-
-            cb_vaga.Items.Clear();
-
+                       
             fillcombox();
         }
 
@@ -166,6 +171,7 @@ namespace software_estacionamento
             panel_atualizar.Visible = true;
             btn_confirmar_novo.Visible = true;
             bt_cancelar_novo.Visible = true;
+          
 
             btn_adicionar_uso.Visible = false;
             btn_corrigir.Visible = false;
@@ -178,10 +184,14 @@ namespace software_estacionamento
             
             fillcombox();
             fillcomboxServico();
-            cb_hora_inicial.Items.Clear();
-            cb_hora_final.Items.Clear();
-            cb_minuto_inicial.Items.Clear();
-            cb_minutos_final.Items.Clear();
+            /*if (cb_hora_inicial.Text!="")
+            {
+                cb_hora_inicial.Items.Clear();
+                cb_hora_final.Items.Clear();
+                cb_minuto_inicial.Items.Clear();
+                cb_minutos_final.Items.Clear();
+            }*/
+            
             
             cb_hora_inicial.DataSource = Enumerable.Range(00, 24).ToList();
             cb_hora_final.DataSource = Enumerable.Range(00, 24).ToList();
@@ -230,6 +240,7 @@ namespace software_estacionamento
             btn_adicionar_uso.Visible = true;
             btn_corrigir.Visible = true;
             btn_update_status_vaga.Visible = true;
+            cb_status.Enabled = true;
 
         }
 
@@ -361,8 +372,10 @@ namespace software_estacionamento
                             c.command.CommandText = "update tbl_vaga set status_vaga = 1 where id_vaga in (Select id_vaga from tbl_vaga where local_vaga = '" + Vaga + "' and tbl_estacionamento_id_estacionamento in (Select tbl_estacionamento_id_estacionamento from tbl_funcionario_est where id_func = 1))";
                             c.command.ExecuteNonQuery();
                             c.fechaConexao();
+                            MessageBox.Show("Status da vaga foi atualizado!");
                             Carregar();
                             CarregarLivres();
+                            inicial();
 
 
                         }
@@ -419,7 +432,7 @@ namespace software_estacionamento
 
         private void btn_confirmar_novo_Click(object sender, EventArgs e)
         {
-            if (cb_vaga.Text == ""  || txt_placa.Text == "" || cb_servico.Text == "" || cb_hora_inicial.Text == "" || cb_minuto_inicial.Text == "") //||ck_pegar_horario_final.Checked == false)
+            if (cb_vaga.Text == ""  || txt_placa.Text == "" || cb_servico.Text == "" || cb_hora_inicial.Text == "" || cb_minuto_inicial.Text == "")
             {
                 MessageBox.Show("Por favor, preencha os campos Vaga, status da vaga, Placa do veículo, serviço prestado e horário inicial");
             }
@@ -470,7 +483,8 @@ namespace software_estacionamento
                         Carregar();
                         CarregarLivres();
                         MessageBox.Show("Dados inseridos com sucesso");
-                        
+                        inicial();
+
 
 
 
@@ -516,12 +530,12 @@ namespace software_estacionamento
         private void bt_confirmar_correcao_Click(object sender, EventArgs e)
         {
 
-            /*if (cb_vaga.Text == "" || txt_placa.Text == "" || cb_servico.Text == "" || ((cb_hora_inicial.Text == "" || cb_minuto_inicial.Text == "") || ck_pegar_horario_iniclal.Checked == false) || ((cb_hora_final.Text == "" || cb_minutos_final.Text == "") || ck_pegar_horario_final.Checked == false))
+            if (cb_vaga.Text == "" || txt_placa.Text == "" || cb_servico.Text == "" || ((cb_hora_inicial.Text == "" || cb_minuto_inicial.Text == "") || ck_pegar_horario_iniclal.Checked == false))
             {
-                MessageBox.Show("Por favor, preencha os campos Vaga, status da vaga, Placa do veículo, serviço prestado, horário inicial e horário final");
+                MessageBox.Show("Por favor, preencha os campos Vaga, status da vaga, Placa do veículo, serviço prestado e horário inicial");
             }
             else
-            {*/
+            {
 
                 conexao c = new conexao();
 
@@ -602,9 +616,10 @@ namespace software_estacionamento
                         c.command.ExecuteNonQuery();
 
                         c.fechaConexao();
-
+                        MessageBox.Show("Dados alterados com sucesso!");
                         Carregar();
                         CarregarLivres();
+                        inicial();
                     }
                     catch (Exception ex)
                     {
@@ -612,7 +627,7 @@ namespace software_estacionamento
                     }
                 }
 
-            //}
+            }
 
         }
 
@@ -631,6 +646,33 @@ namespace software_estacionamento
                 cb_hora_final.Enabled = true;
                 ck_pegar_horario_final.Enabled = true;
             }
+        }
+
+        private void dataGridControle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        public void inicial()
+        {
+            panel_adicionar_update.Visible = false;
+            panel_atualizar.Visible = false;
+            btn_confirmar_novo.Visible = false;
+            bt_cancelar_novo.Visible = false;
+            btn_atualizar_vaga.Visible = false;
+            btn_cancelar_status.Visible = false;
+            bt_confirmar_correcao.Visible = false;
+            bt_cancelar_correcao.Visible = false;
+
+
+            btn_adicionar_uso.Visible = true;
+            btn_corrigir.Visible = true;
+            btn_update_status_vaga.Visible = true;
+        }
+
+        private void btn_corrigir_MouseUp(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Por favor, selecione a linha a ser alterada!");
         }
     }
 }

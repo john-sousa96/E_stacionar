@@ -104,7 +104,7 @@ namespace software_estacionamento
                     DataSet dt = new DataSet();
                     c.connect();
 
-                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + p + "'";
+                    String sql = "select id_placa_veiculo, cidade_veiculo, estado_veiculo, nome_prop_veiculo, marca_veiculo, modelo_veiculo, cor_veiculid_placa_veiculo, cidade_veiculo, estado_veiculo, nome_prop_veiculo, marca_veiculo, modelo_veiculo, cor_veicrom tbl_veiculos where id_placa_veiculo= '" + p + "'";
                     c.command.CommandText = sql;
                     dAdapter.SelectCommand = c.command;
                     dAdapter.Fill(dt);

@@ -40,17 +40,17 @@
             // 
             this.lbl_user_login.AutoSize = true;
             this.lbl_user_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_user_login.Location = new System.Drawing.Point(35, 50);
+            this.lbl_user_login.Location = new System.Drawing.Point(12, 50);
             this.lbl_user_login.Name = "lbl_user_login";
-            this.lbl_user_login.Size = new System.Drawing.Size(87, 24);
+            this.lbl_user_login.Size = new System.Drawing.Size(145, 24);
             this.lbl_user_login.TabIndex = 0;
-            this.lbl_user_login.Text = "Usuário:";
+            this.lbl_user_login.Text = "ID funcionário:";
             // 
             // lbl_senha_login
             // 
             this.lbl_senha_login.AutoSize = true;
             this.lbl_senha_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_senha_login.Location = new System.Drawing.Point(46, 123);
+            this.lbl_senha_login.Location = new System.Drawing.Point(63, 123);
             this.lbl_senha_login.Name = "lbl_senha_login";
             this.lbl_senha_login.Size = new System.Drawing.Size(76, 24);
             this.lbl_senha_login.TabIndex = 1;
@@ -59,7 +59,7 @@
             // txt_user
             // 
             this.txt_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_user.Location = new System.Drawing.Point(128, 50);
+            this.txt_user.Location = new System.Drawing.Point(163, 50);
             this.txt_user.Name = "txt_user";
             this.txt_user.Size = new System.Drawing.Size(220, 26);
             this.txt_user.TabIndex = 2;
@@ -69,7 +69,7 @@
             // txt_senha
             // 
             this.txt_senha.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_senha.Location = new System.Drawing.Point(128, 123);
+            this.txt_senha.Location = new System.Drawing.Point(163, 123);
             this.txt_senha.Name = "txt_senha";
             this.txt_senha.PasswordChar = '•';
             this.txt_senha.Size = new System.Drawing.Size(220, 26);
@@ -102,7 +102,7 @@
             this.MaximizeBox = false;
             this.Name = "form_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
+            this.Text = "Login no sistema e-stacionar";
             this.Load += new System.EventHandler(this.form_login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
