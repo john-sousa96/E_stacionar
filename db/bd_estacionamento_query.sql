@@ -1,4 +1,8 @@
+
+DROP DATABASE  bd_estacionamentos
+go
 CREATE DATABASE bd_estacionamentos
+go
 use bd_estacionamentos
 go
 
@@ -11,12 +15,11 @@ CREATE TABLE tbl_usuario (
   senha_usuario VARCHAR(30) NOT NULL,
   status_usuario INT NOT NULL,
   permissao INT NOT NULL DEFAULT 4,
+  idoso_deificiente INT,
   PRIMARY KEY(id_CPF_usuario)
 )
+go
 
-
-
-Select * from tbl_usuario
 
 CREATE TABLE tbl_token (
   id_token Numeric(10) NOT NULL identity,
@@ -24,8 +27,7 @@ CREATE TABLE tbl_token (
   PRIMARY KEY(id_token)
 )
 
-Alter table tbl_token
-add status_token int 
+go
 
 CREATE TABLE tbl_empresa (
   id_cnpj_empresa VARCHAR(14) NOT NULL,
@@ -48,18 +50,18 @@ CREATE TABLE tbl_empresa (
   permissao INT NULL DEFAULT 2,
   PRIMARY KEY(id_cnpj_empresa)
 )
+go
 
 CREATE TABLE tbl_equipamento (
   id_equipamento Numeric (10) NOT NULL identity,
   desc_equipamento VARCHAR(50) NULL,
   PRIMARY KEY(id_equipamento)
 )
-
+go
 
 CREATE TABLE tbl_estacionamento (
   id_estacionamento Numeric(15) NOT NULL identity,
   tbl_empresa_id_cnpj_empresa VARCHAR(14) NOT NULL,
-  tipo_logradouro_est VARCHAR(20) NOT NULL,
   logradouro_est VARCHAR(150) NOT NULL,
   numero_est VARCHAR(10) NOT NULL,
   complemento_est VARCHAR(200) NULL,
@@ -68,21 +70,21 @@ CREATE TABLE tbl_estacionamento (
   regiao_est VARCHAR(10) NOT NULL,
   cidade_est VARCHAR(100) NOT NULL,
   estado_est VARCHAR(2) NOT NULL,
-  pais_est VARCHAR(50) NOT NULL,
   status_est INT NOT NULL DEFAULT 1,
   ddd_tel_est VARCHAR(2) NULL,
   tel_est VARCHAR(9) NULL,
   ramal_est VARCHAR(10) NULL,
+  lat_est varchar(30),
+	lng_est varchar(30),
   PRIMARY KEY(id_estacionamento),
   INDEX tbl_estacionamento_FKIndex1(tbl_empresa_id_cnpj_empresa),
   FOREIGN KEY(tbl_empresa_id_cnpj_empresa)
     REFERENCES tbl_empresa(id_cnpj_empresa)
-      ON DELETE NO ACTION
-	  );
+     );
 
-Alter table tbl_estacionamento
-add lat_est varchar(30),
-lng_est varchar(30)
+	 go
+
+
 
 
 CREATE TABLE tbl_funcionario_est (
@@ -98,9 +100,9 @@ CREATE TABLE tbl_funcionario_est (
   INDEX tbl_funcionario_est_FKIndex1(tbl_estacionamento_id_estacionamento),
   FOREIGN KEY(tbl_estacionamento_id_estacionamento)
     REFERENCES tbl_estacionamento(id_estacionamento)
-      ON DELETE NO ACTION
-     
+        
 );
+go
 
 CREATE TABLE tbl_veiculos (
   id_placa_veiculo VARCHAR(8) NOT NULL,
@@ -120,7 +122,7 @@ CREATE TABLE tbl_veiculos (
          
 );
 
-
+go
 CREATE TABLE tbl_user_veiculo (
 	id_CPF_usuario VARCHAR(11) NOT NULL,
 	id_placa_veiculo VARCHAR(8) NOT NULL,
@@ -132,7 +134,8 @@ CREATE TABLE tbl_user_veiculo (
     REFERENCES tbl_veiculos(id_placa_veiculo),
 
 
-)
+);
+go
 
 
 CREATE TABLE tbl_vaga (
@@ -151,6 +154,7 @@ CREATE TABLE tbl_vaga (
     REFERENCES tbl_equipamento(id_equipamento)
       
 );
+go
 
 CREATE TABLE tbl_servico (
   id_servico numeric(10) NOT NULL identity,
@@ -165,10 +169,6 @@ CREATE TABLE tbl_servico (
      
 );
 
-Alter table tbl_servico
-add desc_servico varchar(60)
-
-use bd_estacionamentos
 go
 
 CREATE TABLE tbl_reservas (
@@ -186,27 +186,19 @@ CREATE TABLE tbl_reservas (
   INDEX tbl_reservas_FKIndex3(tbl_token_id_token),
   INDEX tbl_reservas_FKIndex4(tbl_vaga_id_vaga),
   FOREIGN KEY(tbl_servico_id_servico)
-    REFERENCES tbl_servico(id_servico)
-	ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+    REFERENCES tbl_servico(id_servico),
   FOREIGN KEY(tbl_usuario_id_CPF_usuario)
-    REFERENCES tbl_usuario(id_CPF_usuario)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+    REFERENCES tbl_usuario(id_CPF_usuario),
   FOREIGN KEY(tbl_token_id_token)
-    REFERENCES tbl_token(id_token)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+    REFERENCES tbl_token(id_token),
   FOREIGN KEY(tbl_vaga_id_vaga)
     REFERENCES tbl_vaga(id_vaga)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
 );
 
 
 
 CREATE TABLE tbl_uso (
-  id_nota_fiscal_uso numeric(20) NOT NULL identity(1000,1),
+  id_nota_fiscal_uso numeric(20) NOT NULL identity,
   tbl_vaga_id_vaga numeric(10)  NULL,
   id_placa_veiculo VARCHAR(8)  NULL,
   tbl_usuario_id_CPF_usuario VARCHAR(11) NULL,
@@ -225,12 +217,11 @@ CREATE TABLE tbl_uso (
     REFERENCES tbl_servico(id_servico),
   FOREIGN KEY(id_placa_veiculo)
     REFERENCES tbl_veiculos(id_placa_veiculo),
-   
-  FOREIGN KEY(tbl_vaga_id_vaga)
+     FOREIGN KEY(tbl_vaga_id_vaga)
     REFERENCES tbl_vaga(id_vaga)
 );
 
-
+go
 
 
 
@@ -238,7 +229,7 @@ insert tbl_empresa values
 ('00000000001234','Empresa de estacionamento teste 1', 'José da Silva', '11','12345678', '002', 'empresateste1@email.com', 'Avenida', 'das sedes', '1234A', 'sala 20, 10º andar', '00021668', 'São Paulo', 'SP', 'Brasil', 'SenhaTeste2020*', '1','2' ),
 ('00000000001235','Empresa de estacionamento teste 2', 'Maria dos Santos', '21','12347895', '003', 'empresateste2@email.com', 'Rua', 'dos testes', '5678', 'sala 10, 2º andar', '00026756', 'Rio de Janeiro', 'RJ', 'Brasil', 'SenhaTeste2020*', '1','2' )
 
-Select * from tbl_empresa
+go
 
 insert tbl_equipamento (desc_equipamento) values 
 
@@ -263,25 +254,26 @@ insert tbl_equipamento (desc_equipamento) values
 ('controle de vagas'),
 ('controle de vagas')
 
-Select * from tbl_equipamento
+go
 
-SET IDENTITY_INSERT tbl_estacionamento OFF 
+SET IDENTITY_INSERT tbl_estacionamento On 
+go
 
-insert tbl_estacionamento (id_estacionamento,tbl_empresa_id_cnpj_empresa,tipo_logradouro_est, logradouro_est, numero_est,complemento_est, CEP_est, bairro_est, regiao_est, cidade_est, estado_est,pais_est, status_est, ddd_tel_est, tel_est, ramal_est) values
+insert tbl_estacionamento (id_estacionamento,tbl_empresa_id_cnpj_empresa, logradouro_est, numero_est,complemento_est, CEP_est, bairro_est, regiao_est, cidade_est, estado_est, status_est, ddd_tel_est, tel_est, ramal_est) values
 
  
 
-(14567791234567, '00000000001234', 'Rua', 'teste de rua', '123', 'entrada pelos fundos da empresa X', '02231987', 'Sé', 'centro', 'São Paulo', 'SP', 'Brasil', 1, '11', '32145678', '32'),
-(34567891234568, '00000000001234', 'Rua', 'teste de rua 2', '124', 'entrada pelos fundos da empresa X', '02231945', 'Pinheiros', 'Oeste ', 'São Paulo', 'SP', 'Brasil', 1, '11', '32145677', '32'),
-(34567891234569, '00000000001234', 'Rua', 'teste de rua 3', '123', 'entrada pelos fundos da empresa X', '02219687', 'Grajaú', 'Sul', 'São Paulo', 'SP', 'Brasil', 1, '11', '32145678', '32'),
-(34567891234570, '00000000001234', 'Rua', 'teste de rua 4', '123', 'entrada pelos fundos da empresa X', '02231756', 'Tatuapé', 'Leste', 'São Paulo', 'SP', 'Brasil', 1, '11', '32145657', '32'),
-(34567891234571, '00000000001234', 'Rua', 'teste de rua 5', '123', 'entrada pelos fundos da empresa X', '02231578', 'Santana', 'Norte', 'São Paulo', 'SP', 'Brasil', 1, '11', '32145658', '32'),
-(34567891234502, '00000000001235', 'Avenida', 'Atlântica ', '123', 'entrada pelos fundos da empresa X', '02231945', 'Copacabana', 'Sul', 'Rio de Janeiro', 'RJ', 'Brasil', 1, '21', '45145678', '02'),
-(34567891234503, '00000000001235', 'Avenida', 'X ', '123', 'entrada pelos fundos da empresa X', '02234545', 'Glória', 'Centro', 'Rio de Janeiro', 'RJ', 'Brasil', 1, '21', '45145678', '12'),
-(34567891234504, '00000000001235', 'Travessa', 'Y ', '123', 'entrada pelos fundos da empresa X', '02248945', 'Maré', ' Norte', 'Rio de Janeiro', 'RJ', 'Brasil', 1, '21', '45145878', '01'),
-(34567891234505, '00000000001235', 'Rodovia', 'da Barra ', '123', 'entrada pelos fundos da empresa X', '02231945', 'Barra da Tijuca', 'Oeste', 'Rio de Janeiro', 'RJ', 'Brasil', 1, '21', '45149678', '02')
+(14567791234567, '00000000001234', 'teste de rua', '123', 'entrada pelos fundos da empresa X', '02231987', 'Sé', 'centro', 'São Paulo', 'SP',  1, '11', '32145678', '32'),
+(34567891234568, '00000000001234',  'teste de rua 2', '124', 'entrada pelos fundos da empresa X', '02231945', 'Pinheiros', 'Oeste ', 'São Paulo', 'SP', 1, '11', '32145677', '32'),
+(34567891234569, '00000000001234',  'teste de rua 3', '123', 'entrada pelos fundos da empresa X', '02219687', 'Grajaú', 'Sul', 'São Paulo', 'SP',  1, '11', '32145678', '32'),
+(34567891234570, '00000000001234',  'teste de rua 4', '123', 'entrada pelos fundos da empresa X', '02231756', 'Tatuapé', 'Leste', 'São Paulo', 'SP',  1, '11', '32145657', '32'),
+(34567891234571, '00000000001234',  'teste de rua 5', '123', 'entrada pelos fundos da empresa X', '02231578', 'Santana', 'Norte', 'São Paulo', 'SP',  1, '11', '32145658', '32'),
+(34567891234502, '00000000001235',  'Atlântica ', '123', 'entrada pelos fundos da empresa X', '02231945', 'Copacabana', 'Sul', 'Rio de Janeiro', 'RJ',  1, '21', '45145678', '02'),
+(34567891234503, '00000000001235',  'X ', '123', 'entrada pelos fundos da empresa X', '02234545', 'Glória', 'Centro', 'Rio de Janeiro', 'RJ',  1, '21', '45145678', '12'),
+(34567891234504, '00000000001235',  'Y ', '123', 'entrada pelos fundos da empresa X', '02248945', 'Maré', ' Norte', 'Rio de Janeiro', 'RJ',  1, '21', '45145878', '01'),
+(34567891234505, '00000000001235',  'da Barra ', '123', 'entrada pelos fundos da empresa X', '02231945', 'Barra da Tijuca', 'Oeste', 'Rio de Janeiro', 'RJ', 1, '21', '45149678', '02')
 
-Select * from tbl_estacionamento
+go
 
 Insert tbl_funcionario_est (tbl_estacionamento_id_estacionamento, nome_completo_func, CPF_func, cargo_func,senha_func) values
 
@@ -295,15 +287,17 @@ Insert tbl_funcionario_est (tbl_estacionamento_id_estacionamento, nome_completo_
 (34567891234504, 'Clóvis', '213547894', 'Caixa', 'CaIxa123*'),
 (34567891234505, 'Ronaldo', '213546789', 'Caixa', 'CaIxa123*'), 
 (14567791234567, 'Enzo', '213542345', 'Caixa', 'CaIxa123*')
+go
 
-SET IDENTITY_INSERT tbl_funcionario_est OFF
+--SET IDENTITY_INSERT tbl_funcionario_est ON
+--go
 
-Insert tbl_funcionario_est (id_func, tbl_estacionamento_id_estacionamento, nome_completo_func, CPF_func, cargo_func,senha_func, permissao) values
+/*Insert tbl_funcionario_est (id_func, tbl_estacionamento_id_estacionamento, nome_completo_func, CPF_func, cargo_func,senha_func, permissao) values
 
 (19041996, 14567791234567,'Adminstrador', '33344466699', 'Administrador', '*Estacionar2020*',0)
 
-Select * from tbl_funcionario_est
-
+go
+*/
 insert tbl_token (status_token) values
 (1),
 (1),
@@ -319,10 +313,9 @@ insert tbl_token (status_token) values
 (1),
 (1)
 
-use bd_estacionamentos
 go
 
-Select * from tbl_token
+
 
 insert tbl_servico (tbl_estacionamento_id_estacionamento, desc_servico, valor_servico) values
 (14567791234567, 'estacionar em vaga descoberta', 10.00),
@@ -338,31 +331,27 @@ insert tbl_servico (tbl_estacionamento_id_estacionamento, desc_servico, valor_se
 (34567891234502, 'estacionar em vaga coberta', 20),
 (34567891234502, 'vallet', 10)
 
-
-Select * from tbl_servico
+go
 
 insert tbl_usuario (id_CPF_usuario, nome_usuario, ddd_cel, cel_usuario, email_usuario, senha_usuario, status_usuario) values
 
 ('00000001234', 'Usuário teste', 11, 97777568, 'usuario@mail.com', 'senhausuario', 1),
-('00000001235', 'Usuário teste 2', 21, 97777575, 'usuario2@mail.com', 'senhausuario', 1)
+('00000001235', 'Usuário teste 2', 21, 97777575, 'usuario2@mail.com', 'senhausuario', 1),
+('00000001236', 'Usuário teste 3', 11, 97777568, 'usuario3@mail.com', 'senhausuario', 1),
+('00000001237', 'Usuário teste 4', 21, 97777575, 'usuario4@mail.com', 'senhausuario', 1)
 
-Select * from tbl_usuario
+go
+
 
 insert tbl_veiculos (id_placa_veiculo, tbl_token_id_token, nome_prop_veiculo, cidade_veiculo, estado_veiculo, marca_veiculo, modelo_veiculo, cor_veiculo, seguro_veiculo) values
 ('AAA1234', 1, 'Maria de Souza', 'São Paulo', 'SP', 'Citroen', 'C3', 'vermelho', 1),  
-('BBB4321', 2, 'José dos Santos', 'Rio de Janeiro', 'RJ', 'Fiat', 'uno', 'vermelho', 1)
+('BBB4321', 2, 'José dos Santos', 'Rio de Janeiro', 'RJ', 'Fiat', 'uno', 'vermelho', 1),
+('ABC1234', 3, 'João da Silva', 'São Paulo', 'SP', 'Ford', 'ka', 'Laranja', 1),  
+('DEF4321', 4, 'Luís Pereira', 'Rio de Janeiro', 'RJ', 'Toyota', 'Yarris', 'vermelho', 1)
 
-Select * from tbl_veiculos
-
-Select * from tbl_equipamento
+go
 
 insert tbl_vaga (tbl_equipamento_id_equipamento, tbl_estacionamento_id_estacionamento, local_vaga, status_vaga) values 
-
-
-
-
-
-
 
 (2, 14567791234567, 'B1', 1),
 (3, 14567791234567, 'C2', 1),
@@ -380,427 +369,156 @@ insert tbl_vaga (tbl_equipamento_id_equipamento, tbl_estacionamento_id_estaciona
 (15, 14567791234567, 'G1', 1),
 (16, 14567791234567, 'H1', 1)
 
-Select * from tbl_vaga
-
-use bd_estacionamentos
 go
 
 
 
-insert tbl_uso (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
-/*(2, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 1, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',1, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 1, '00000001234',1, '2020-09-12 17:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 1, '00000001234',1, '2020-09-11 14:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 1, '00000001234',1, '2020-09-10 12:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 1, '00000001234',1, '2020-09-08 11:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 1, '00000001234',1, '2020-09-09 10:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 1, '00000001234',1, '2020-09-10 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 1, '00000001234',1, '2020-09-01 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 1, '00000001234',1, '2020-09-02 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',1, '2020-09-03 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 1, '00000001234',1, '2020-09-11 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 2, '00000001234',1, '2020-09-12 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 2, '00000001234',1, '2020-09-05 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-11 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',1, '2020-09-09 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',1, '2020-09-07 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',1, '2020-09-06 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',1, '2020-09-03 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',1, '2020-09-04 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',1, '2020-09-05 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',1, '2020-09-06 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 1, '00000001234',2, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(3, 1, '00000001234',2, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(4, 1, '00000001234',2, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 1, '00000001234',2, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(6, 1, '00000001234',3, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(7, 1, '00000001234',4, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(8, 1, '00000001234',5, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(9, 1, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(10, 1, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(11, 1, '00000001234',2, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(2, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 130),
-(3, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(4, 12, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 15),
-(6, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 9),
-(7, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 90),
-(8, 2, '00000001234',6, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(9, 2, '00000001234',4, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(10, 2, '00000001234',4, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(11, 2, '00000001234',4, '2020-09-13 18:43:59.953', CURRENT_TIMESTAMP, 2),
-(2, 1, '00000001234',4, '2020-09-12 17:43:59.953', CURRENT_TIMESTAMP, 20),
-(3, 1, '00000001234',4, '2020-09-11 14:43:59.953', CURRENT_TIMESTAMP, 150),
-(4, 1, '00000001234',3, '2020-09-10 12:43:59.953', CURRENT_TIMESTAMP, 30),
-(5, 1, '00000001234',6, '2020-09-08 11:43:59.953', CURRENT_TIMESTAMP, 20),
-(6, 1, '00000001234',5, '2020-09-09 10:43:59.953', CURRENT_TIMESTAMP, 20),
-(7, 1, '00000001234',4, '2020-09-10 08:43:59.953', CURRENT_TIMESTAMP, 30),
-(8, 1, '00000001234',5, '2020-09-01 08:43:59.953', CURRENT_TIMESTAMP, 40),
-(9, 1, '00000001234',6, '2020-09-02 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',6, '2020-09-03 08:43:59.953', CURRENT_TIMESTAMP, 50),
-(11, 1, '00000001234',7, '2020-09-11 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(2, 2, '00000001234',1, '2020-09-12 18:43:59.953', CURRENT_TIMESTAMP, 80),
-(3, 2, '00000001234',1, '2020-09-05 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-11 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',7, '2020-09-09 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',7, '2020-09-07 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',7, '2020-09-06 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',4, '2020-09-03 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',4, '2020-09-04 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',4, '2020-09-05 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',3, '2020-09-06 18:43:59.953', CURRENT_TIMESTAMP, 10)*/
+insert tbl_uso (tbl_vaga_id_vaga,id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
 
-use bd_estacionamentos
+(2, 'AAA1234', '00000001234',1, '2020-11-25 10:43:59.953', '2020-11-25 18:43:59.953', 10)
 go
-insert tbl_uso (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
 
-(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(3, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(5, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(6, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(7, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(8, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(9, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(10, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(11, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(2, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(3, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 12, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(5, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(6, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(7, 2, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(8, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(9, 2, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(10, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(11, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(2, 1, '00000001234',1, '2020-09-15 17:43:59.953', '2020-09-16 23:43:59.953', 10),
-(3, 1, '00000001234',1, '2020-09-15 14:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 1, '00000001234',1, '2020-09-15 12:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 1, '00000001234',1, '2020-09-15 11:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 1, '00000001234',1, '2020-09-15 10:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 1, '00000001234',1, '2020-09-15 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 1, '00000001234',1, '2020-09-15 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 1, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',1, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 1, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(3, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(4, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(6, 1, '00000001234',3, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(7, 1, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(8, 1, '00000001234',5, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(9, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(10, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(11, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(2, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 130),
-(3, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(4, 12, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 15),
-(6, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 9),
-(7, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 90),
-(8, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(9, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(10, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(11, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 2),
-(2, 1, '00000001234',4, '2020-09-16 17:43:59.953', CURRENT_TIMESTAMP, 20),
-(3, 1, '00000001234',4, '2020-09-16 14:43:59.953', CURRENT_TIMESTAMP, 150),
-(4, 1, '00000001234',3, '2020-09-16 12:43:59.953', CURRENT_TIMESTAMP, 30),
-(5, 1, '00000001234',6, '2020-09-16 11:43:59.953', CURRENT_TIMESTAMP, 20),
-(6, 1, '00000001234',5, '2020-09-16 10:43:59.953', CURRENT_TIMESTAMP, 20),
-(7, 1, '00000001234',4, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 30),
-(8, 1, '00000001234',5, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 40),
-(9, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',6, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 50),
-(11, 1, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(2, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 80),
-(3, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',3, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10)
+insert tbl_uso (tbl_vaga_id_vaga,id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
 
-Select * from tbl_uso
+(3, 'BBB4321', '00000001235',1, '2020-11-25 10:43:59.953', '2020-11-25 18:43:59.953', 10)
+go
+
+insert tbl_uso (tbl_vaga_id_vaga,id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
+
+(4, 'ABC1234', '00000001236',1, '2020-12-04 10:43:59.953', '2020-12-04 18:43:59.953', 10)
+go
+insert tbl_uso (tbl_vaga_id_vaga,id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
+(5, 'DEF4321', '00000001237',1, '2020-12-04 10:43:59.953', '2020-12-04 18:43:59.953', 10)
+go
+
 
 insert tbl_reservas (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_reserva, timestamp_final_reserva, valor_servico_reserva) values 
 
 
-(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 2, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 1, '00000001234',1, '2020-09-15 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(5, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(6, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(7, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(8, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(9, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(10, 1, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(11, 1, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(2, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(3, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 12, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(5, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(6, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(7, 2, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(8, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(9, 2, '00000001234',1, '2020-09-15 18:43:59.953','2020-09-16 23:43:59.953', 10),
-(10, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(11, 2, '00000001234',1, '2020-09-15 18:43:59.953', '2020-09-16 23:43:59.953', 10),
-(2, 1, '00000001234',1, '2020-09-15 17:43:59.953', '2020-09-16 23:43:59.953', 10),
-(3, 1, '00000001234',1, '2020-09-15 14:43:59.953', '2020-09-16 23:43:59.953', 10),
-(4, 1, '00000001234',1, '2020-09-15 12:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 1, '00000001234',1, '2020-09-15 11:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 1, '00000001234',1, '2020-09-15 10:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 1, '00000001234',1, '2020-09-15 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 1, '00000001234',1, '2020-09-15 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 1, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',1, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 1, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(3, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(2, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(3, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(4, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(6, 1, '00000001234',3, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(7, 1, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(8, 1, '00000001234',5, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(9, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 30),
-(10, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(11, 1, '00000001234',2, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(2, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 130),
-(3, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 20),
-(4, 12, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 40),
-(5, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 15),
-(6, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 9),
-(7, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 90),
-(8, 2, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(9, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 100),
-(10, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 120),
-(11, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 2),
-(2, 1, '00000001234',4, '2020-09-16 17:43:59.953', CURRENT_TIMESTAMP, 20),
-(3, 1, '00000001234',4, '2020-09-16 14:43:59.953', CURRENT_TIMESTAMP, 150),
-(4, 1, '00000001234',3, '2020-09-16 12:43:59.953', CURRENT_TIMESTAMP, 30),
-(5, 1, '00000001234',6, '2020-09-16 11:43:59.953', CURRENT_TIMESTAMP, 20),
-(6, 1, '00000001234',5, '2020-09-16 10:43:59.953', CURRENT_TIMESTAMP, 20),
-(7, 1, '00000001234',4, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 30),
-(8, 1, '00000001234',5, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 40),
-(9, 1, '00000001234',6, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 1, '00000001234',6, '2020-09-16 08:43:59.953', CURRENT_TIMESTAMP, 50),
-(11, 1, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 60),
-(2, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 80),
-(3, 2, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(4, 12, '00000001234',1, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(5, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(6, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(7, 2, '00000001234',7, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(8, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(9, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(10, 2, '00000001234',4, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10),
-(11, 2, '00000001234',3, '2020-09-16 18:43:59.953', CURRENT_TIMESTAMP, 10)
+(2, 1, '00000001234',1, '2020-11-25 21:43:59.953', '2020-11-25 23:43:59.953', 10),
+(2, 1, '00000001234',1, '2020-12-04 21:43:59.953', '2020-12-04 23:43:59.953', 10)
 
-select * from tbl_reservas where id_reserva
+go
 
 use bd_estacionamentos
 go
-select * from tbl_funcionario_est
-go
-AAA1234', 1, 'Maria de Souza', 'São Paulo', 'SP', 'Citroen', 'C3', 'vermelho', 1),  
-('BBB4321
-insert tbl_uso (tbl_vaga_id_vaga,  id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, valor_servico_uso) values
-
-(2, 'AAA1234', '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(3, 'BBB4321', '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(4, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(5, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(6, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(7, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(8, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(9, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(10, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(11, 1, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(2, 2, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(3, 2, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(4, 12, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(5, 2, '00000001234',1, '2020-09-15 18:43:59.953', 10),
-(6, 2, '00000001234',1, '2020-09-15 18:43:59.953', 10)
-
-
-Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(hour, U.timestamp_inicio_uso, U.timestamp_final_uso) * U.valor_servico_uso) 
-as total, C.nome_usuario, S.desc_servico,v.local_vaga, R.id_placa_veiculo
-from  tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario  = C.id_CPF_usuario
-inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico
-inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga
-inner join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
-
-Select *, datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) from tbl_uso where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 300
-
-Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(hour, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * R.valor_servico_reserva) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where datediff(hour, timestamp_final_reserva, CURRENT_TIMESTAMP) <= 24
 
 
 
-Select * from tbl_uso where timestamp_final_uso is null
 
-insert tbl_uso (timestamp_inicio_uso, tbl_vaga_id_vaga, tbl_token_id_token,tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_final_uso ) values (CURRENT_TIMESTAMP,2, 3, '00000001234', 6, null)
-
-
-Select timestamp_inicio_uso, timestamp_final_uso, (DATEDIFF(hour, timestamp_inicio_uso, timestamp_final_uso) * valor_servico_uso) from tbl_uso 
-
-
-select count(*) as permissao from tbl_funcionario_est where id_func=19041996 and permissao = 0
-inner join tbl_estacionamento as E on V.tbl_estacionamento_id_estacionamento = E.id_estacionamento
-
-
-
-Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal
-from tbl_vaga as V  left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico left join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where F.id_func = 1 and U.timestamp_final_uso is null order by V.local_vaga asc 
+/*
+			--Select os veículos em uso
+			Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso,
+				(DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, 
+				C.nome_usuario,	S.desc_servico,v.local_vaga, u.id_placa_veiculo
+					from tbl_uso as U
+						full join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario
+						inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico
+						inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga 
+							where timestamp_final_uso is null
+*/
 
 
-Select * from tbl_funcionario_est
 
-Select Distinct (V.local_vaga), V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
-left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
-left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
-where F.id_func = 1
+/*
+				-- Select os veículos que usaram o estacionamento nas últimas 24h
+                Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, 
+					(DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, 
+					C.nome_usuario, S.desc_servico,v.local_vaga, U.id_placa_veiculo 
+						from tbl_uso as U 
+							inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario
+							inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico 
+							inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga 
+								where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
 
---Código para usar
-Select V.local_vaga,V.id_vaga,U.id_placa_veiculo, V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso), iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso),U.timestamp_final_uso from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1
+*/
+
+/*
+				-- Select veículo
+				select id_placa_veiculo, cidade_veiculo, estado_veiculo, nome_prop_veiculo, marca_veiculo, modelo_veiculo, cor_veiculo from tbl_veiculos where id_placa_veiculo = '' 
+
+*/
+
+/*
+		-- código para preencher o grid de controle manual
+		Select V.local_vaga,
+			iif(U.timestamp_final_uso is not null,null,U.id_placa_veiculo) as id_placa_veiculo,
+			V.status_vaga, 
+			iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso,
+			iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso,
+			iif(U.timestamp_final_uso is not null,null,S.desc_servico) as desc_servico 
+				from tbl_uso as U
+					right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga 
+					left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico 
+					join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+						and F.id_func = 1 
+							order by local_vaga
+
+*/
+
+/*
+
+			-- Código para carregar as vagas
+			Select Distinct (V.local_vaga), V.status_vaga
+				from tbl_vaga as V 
+					left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+					left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga 
+						where F.id_func = 1  and V.status_vaga = 0 
+							order by V.local_vaga asc
+*/
 
 
-Select * from tbl_uso
+/*
+	-- Código para preencher o ComboBox de Vagas
+	Select Distinct(V.local_vaga) 
+		from tbl_vaga as V 
+			left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+			left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga 
+				where F.id_func = 1
+*/
 
-Select V.local_vaga,V.id_vaga, V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
-full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
-full join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
-where F.id_func = 1 
+/*
+		-- Código para preencher comboBox de serviços
+		Select Distinct(S.desc_servico) 
+			from tbl_Servico as S 
+				left join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento  
+					where F.id_func = 1
 
-
-Update tbl_vaga set status_vaga = 0  where id_vaga = 2
-
---RELATÓRIO FUNCIONARIO EM USO
-Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, u.id_placa_veiculo from tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga  where timestamp_final_uso is null
-
---RELATORIO FUNCIONARIO 24H
-Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, C.nome_usuario, S.desc_servico,v.local_vaga, U.id_placa_veiculo from tbl_uso as U inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
-
--- RESERVAS
-Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(hour, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * R.valor_servico_reserva) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where datediff(hour, timestamp_final_reserva, CURRENT_TIMESTAMP) <= 24
+*/
 
  
-if (tbl_vaga.status_vaga = 0)
-	begin 
-		Select Distinct (V.local_vaga), V.status_vaga from tbl_vaga as V left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga where F.id_func = 1  and V.status_vaga = 0 order by V.local_vaga asc
-	end
-else
-	begin 
-		Select Distinct (V.local_vaga), V.status_vaga,  U.id_nota_fiscal_uso, U.timestamp_inicio_uso from tbl_vaga as V 
-		left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
-		left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga
-	end
 
-	Select * from tbl_uso
-
-	Declare @i int = 194 
-	While @i <= 195
-		Begin 
-			Delete from tbl_uso where id_nota_fiscal_uso = @i
-			set @i = @i+1
-		End
+	
 
 
 
-		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento right join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  left join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico left join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1 order by V.local_vaga asc
-
-		update tbl_vaga set status_vaga = 0 where id_vaga in (Select id_vaga from tbl_vaga where local_vaga = 'A1' and tbl_estacionamento_id_estacionamento in (Select tbl_estacionamento_id_estacionamento from tbl_funcionario_est where id_func = 1))
-		update tbl_uso set timestamp_final_uso = CURRENT_TIMESTAMP  where tbl_vaga_id_vaga in (Select id_vaga from tbl_vaga where local_vaga = 'A1' and tbl_estacionamento_id_estacionamento in (Select tbl_estacionamento_id_estacionamento from tbl_funcionario_est where id_func = 1))
-
-		Select Distinct(V.local_vaga) from tbl_vaga as V left join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento left join tbl_uso as U on U.tbl_vaga_id_vaga = V.id_vaga where F.id_func = 1
-
-		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, R.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento full join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  full join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico full join tbl_veiculos as R on U.tbl_token_id_token = R.tbl_token_id_token where (F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1) or (F.id_func = 1  and V.status_vaga = 1) order by V.local_vaga asc
-
-		Select Distinct(S.desc_servico) from tbl_Servico as S left join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento  where F.id_func = 1
-
-		
-
-		Select Distinct (V.local_vaga), V.status_vaga, U.id_nota_fiscal_uso, U.timestamp_inicio_uso,U.timestamp_final_uso, U.valor_servico_uso, S.desc_servico, U.id_placa_veiculo, (DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as subtotal from tbl_vaga as V  full join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento full join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga  full join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico  where (F.id_func = 1 and U.timestamp_final_uso is null and V.status_vaga = 1) or (F.id_func = 1  and V.status_vaga = 1) order by V.local_vaga asc
-
-		Select count(U.id_placa_veiculo) as qtd from tbl_uso as U inner join tbl_vaga as Va on U.tbl_vaga_id_vaga = Va.id_vaga inner join tbl_estacionamento as E on Va.tbl_estacionamento_id_estacionamento = E.id_estacionamento inner join tbl_funcionario_est as F on E.id_estacionamento = F.tbl_estacionamento_id_estacionamento where Va.local_vaga = '" + Vaga + "' and F.id_func = 1 and U.timestamp_final_uso is Null
-
-, @id_servico numeric(10)
-
-		insert tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) values
-		(vaga)
-		go
-
+		-- procedure para inserir novo usuário
 			create procedure usp_inserir_manualmente
-			@id_func numeric(15), @vaga varchar(10), @placa varchar(8),@servico varchar(100), @inicio datetime--, @final datetime 
+			@id_func numeric(15), @vaga varchar(10), @placa varchar(8),@servico varchar(100), @inicio datetime
 		As
 			Declare @id_vaga numeric(10) 
-			Select @id_vaga = V.id_vaga from tbl_vaga as V inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where local_vaga = @vaga and F.id_func = @id_func 
+			Select @id_vaga = V.id_vaga from tbl_vaga as V 
+			inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+			where local_vaga = @vaga and F.id_func = @id_func 
 			
 			Declare @id_servico numeric(10)
-			Select @id_servico = S.id_servico from tbl_servico as S inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where S.desc_servico like @servico and F.id_func = @id_func
+			Select @id_servico = S.id_servico from tbl_servico as S 
+			inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+			where S.desc_servico like @servico and F.id_func = @id_func
 			
+			Declare @valor decimal(18,0)
+			Select @valor = valor_servico from tbl_servico where id_servico = @id_servico
 			
 
-			insert tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_servico_id_servico, timestamp_inicio_uso)values--, timestamp_final_uso) 
-			(@id_vaga,@placa,@id_servico,@inicio)--,@final)
+			insert tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_servico_id_servico, timestamp_inicio_uso, valor_servico_uso)values
+			(@id_vaga,@placa,@id_servico,@inicio, @valor)
 			update tbl_vaga set status_vaga = 1 where id_vaga = @id_vaga
 			go
-			exec usp_inserir_manualmente 1,'B1','BBB4321','estacionar em vaga descoberta', '2020-09-15 18:43'
-
-			Select * from tbl_uso
-
-			Select Distinct (V.local_vaga), V.status_vaga, iif(U.timestamp_final_uso is not null,null,U.id_placa_veiculo) as id_placa_veiculo, iif(U.timestamp_final_uso is not null,null,U.id_nota_fiscal_uso) as id_nota_fiscal_uso, iif(U.timestamp_final_uso is not null,null,U.timestamp_inicio_uso) as timestamp_inicio_uso ,iif(U.timestamp_final_uso is not null,null,U.timestamp_final_uso) as timestamp_final_uso from tbl_uso as U right join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento and F.id_func = 1	
-			go
 			
-			-- Procedure para botão corrigir
+
+			
+		
+			-- Procedure para botão corrigir e finalizar o uso do cliente
 				create procedure usp_corrigir
 				@id_func numeric(15), @notaFiscal numeric(20), @vaga varchar(10) , @placa varchar(8),@servico varchar(100), @inicio datetime, @final datetime
 				As
@@ -809,17 +527,50 @@ else
 				
 				Declare @nova_vaga numeric(10) 
 				
-				Select @nova_vaga  = V.id_vaga from tbl_vaga as V inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where local_vaga = @vaga and F.id_func = @id_func 
+				Select @nova_vaga  = V.id_vaga from tbl_vaga as V 
+				inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where local_vaga = @vaga and F.id_func = @id_func 
+				
 				Declare @id_servico numeric(10)
-				Select @id_servico = S.id_servico from tbl_servico as S inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento where S.desc_servico like @servico and F.id_func = @id_func
-				update tbl_uso set tbl_vaga_id_vaga = @nova_vaga, id_placa_veiculo = @placa, tbl_servico_id_servico = @id_servico, timestamp_inicio_uso = @inicio, timestamp_final_uso = @final where id_nota_fiscal_uso = @notaFiscal
+				Select @id_servico = S.id_servico from tbl_servico as S
+				inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
+				where S.desc_servico like @servico and F.id_func = @id_func
+				
+				update tbl_uso set tbl_vaga_id_vaga = @nova_vaga, id_placa_veiculo = @placa, tbl_servico_id_servico = @id_servico, timestamp_inicio_uso = @inicio, timestamp_final_uso = @final 
+				where id_nota_fiscal_uso = @notaFiscal
 				if @id_vaga <> @nova_vaga
 					begin 
 						update tbl_vaga set status_vaga = 0 where id_vaga = @id_vaga
 						update tbl_vaga set status_vaga = 1 where id_vaga = @nova_vaga
 					end
 				go
-				exec usp_corrigir 1, 1002,'B2','BBB4321', 'estacionar em vaga descoberta', '2020-11-02 20:20','2020-11-02 20:26'
+
+				-- procedure para o botão corrigir SEM O HORARIO FINAL
+				
+				create procedure usp_corrigir_parcialmente
+				@id_func numeric(15), @notaFiscal numeric(20), @vaga varchar(10) , @placa varchar(8),@servico varchar(100), @inicio datetime
+				As
+				Declare @id_vaga numeric(10) 
+				Select @id_vaga = V.id_vaga from tbl_vaga as V inner join tbl_uso as U on V.id_vaga = U.tbl_vaga_id_vaga where  U.id_nota_fiscal_uso = @notaFiscal
+				
+				Declare @nova_vaga numeric(10) 
+				
+				Select @nova_vaga  = V.id_vaga from tbl_vaga as V 
+				inner join tbl_funcionario_est as F on V.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento 
+				where local_vaga = @vaga and F.id_func = @id_func 
+
+				Declare @id_servico numeric(10)
+				Select @id_servico = S.id_servico from tbl_servico as S
+				inner join tbl_funcionario_est as F on S.tbl_estacionamento_id_estacionamento = F.tbl_estacionamento_id_estacionamento
+				where S.desc_servico like @servico and F.id_func = @id_func
+				
+				update tbl_uso set tbl_vaga_id_vaga = @nova_vaga, id_placa_veiculo = @placa, tbl_servico_id_servico = @id_servico, timestamp_inicio_uso = @inicio 
+				where id_nota_fiscal_uso = @notaFiscal
+				if @id_vaga <> @nova_vaga
+					begin 
+						update tbl_vaga set status_vaga = 0 where id_vaga = @id_vaga
+						update tbl_vaga set status_vaga = 1 where id_vaga = @nova_vaga
+					end
+				go
 
 
-				Select * from tbl_uso 
+				
