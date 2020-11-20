@@ -29,7 +29,7 @@ namespace software_estacionamento
 
 
 
-                    sql = "Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(hour, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * R.valor_servico_reserva) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where datediff(hour, timestamp_final_reserva, CURRENT_TIMESTAMP) <= 24";
+                    sql = "Select R.id_reserva, R.timestamp_inicio_reserva, R.timestamp_final_reserva, S.desc_servico, V.local_vaga, C.id_placa_veiculo, U.nome_usuario,  (DATEDIFF(minute, R.timestamp_inicio_reserva, R.timestamp_final_reserva) * (R.valor_servico_reserva/60)) as subtotal from tbl_reservas as R inner join tbl_usuario as U on R.tbl_usuario_id_CPF_usuario  = U.id_CPF_usuario inner join tbl_servico as S on R.tbl_servico_id_servico = S.id_servico inner join tbl_vaga as V on R.tbl_vaga_id_vaga = V.id_vaga inner join tbl_veiculos as C on R.tbl_token_id_token = C.tbl_token_id_token where (datediff(hour, timestamp_inicio_reserva, CURRENT_TIMESTAMP) <= 24) and (datediff(hour, timestamp_inicio_reserva, CURRENT_TIMESTAMP) >= 0)";
                    
                     c.command.CommandText = sql;
 
@@ -55,7 +55,7 @@ namespace software_estacionamento
             String p;
 
             p = Convert.ToString(selectedRow.Cells["id_placa_veiculo"].Value);
-            MessageBox.Show(p);
+           
 
             dataGridVeiculos.Visible = true;
 
@@ -69,7 +69,7 @@ namespace software_estacionamento
                     DataSet dt = new DataSet();
                     c.connect();
 
-                    String sql = "select * from tbl_veiculos where id_placa_veiculo= '" + p + "'";
+                    String sql = "select id_placa_veiculo, cidade_veiculo, estado_veiculo, nome_prop_veiculo, marca_veiculo, modelo_veiculo, cor_veiculo from tbl_veiculos where id_placa_veiculo= '" + p + "'";
                     c.command.CommandText = sql;
                     dAdapter.SelectCommand = c.command;
                     dAdapter.Fill(dt);

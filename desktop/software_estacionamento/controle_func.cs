@@ -396,7 +396,7 @@ namespace software_estacionamento
             {
                 int? status_vaga = e.Value as int?;
 
-                // replace statement checks with your own conditions
+                
                 if (status_vaga == 0)
                 {
                     e.Value = "Livre";
@@ -530,7 +530,7 @@ namespace software_estacionamento
         private void bt_confirmar_correcao_Click(object sender, EventArgs e)
         {
 
-            if (cb_vaga.Text == "" || txt_placa.Text == "" || cb_servico.Text == "" || ((cb_hora_inicial.Text == "" || cb_minuto_inicial.Text == "") || ck_pegar_horario_iniclal.Checked == false))
+            if (cb_vaga.Text == "" || txt_placa.Text == "" || cb_servico.Text == "")
             {
                 MessageBox.Show("Por favor, preencha os campos Vaga, status da vaga, Placa do veículo, serviço prestado e horário inicial");
             }
