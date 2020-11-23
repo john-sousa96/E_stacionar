@@ -419,17 +419,17 @@ go
 */
 
 
-
 /*
+
 				-- Select os veículos que usaram o estacionamento nas últimas 24h
-                Select U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, 
+                Select, U.id_nota_fiscal_uso, U.valor_servico_uso, U.timestamp_inicio_uso, U.timestamp_final_uso, 
 					(DATEDIFF(MINUTE, U.timestamp_inicio_uso, CURRENT_TIMESTAMP) * (U.valor_servico_uso/60)) as total, 
 					C.nome_usuario, S.desc_servico,v.local_vaga, U.id_placa_veiculo 
 						from tbl_uso as U 
 							inner join tbl_usuario as C on U.tbl_usuario_id_CPF_usuario = C.id_CPF_usuario
 							inner join tbl_servico as S on U.tbl_servico_id_servico = S.id_servico 
 							inner join tbl_vaga as V on U.tbl_vaga_id_vaga = V.id_vaga 
-								where datediff(hour, timestamp_final_uso, CURRENT_TIMESTAMP) <= 24
+								where (datediff(hour, timestamp_final_uso, getdate()) >= 0) and  (datediff(hour, timestamp_final_uso, getdate()) <= 24)
 
 */
 
