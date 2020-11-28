@@ -15,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         conteudo = findViewById(R.id.conteudo);
-        conteudo.loadUrl("https://www.estacionar.somee.com/index.aspx");
+        conteudo.loadUrl("https://estacionar.somee.com/index.aspx");
         conteudo.setWebViewClient(new WebViewClient());
-        WebSettings settings= conteudo.getSettings();
+        WebSettings settings = conteudo.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setGeolocationEnabled(true);
     }
