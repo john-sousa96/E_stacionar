@@ -1,3 +1,9 @@
+use teste
+go
+
+drop database bd_estacionamentos
+go
+
 CREATE DATABASE bd_estacionamentos
 GO
 USE bd_estacionamentos
@@ -191,6 +197,16 @@ CREATE TABLE tbl_uso (
     REFERENCES tbl_vaga(id_vaga)
 );
 
+CREATE TABLE tbl_servico_vaga (
+	tbl_servico_id_servico NUMERIC(10) NOT NULL,
+	tbl_vaga_id_vaga NUMERIC(10)NOT NULL,
+	FOREIGN KEY(tbl_vaga_id_vaga)
+    REFERENCES tbl_vaga(id_vaga),
+	FOREIGN KEY(tbl_servico_id_servico)
+    REFERENCES tbl_servico(id_servico)
+);
+go
+
 INSERT INTO tbl_empresa VALUES
 ('00000000001234', 'Empresa de estacionamento teste 1', 'José da Silva', '11', '12345678', '002', 'empresateste1@email.com', 'Avenida das sedes', '1234A', 'sala 20, 10º andar', '00021668', 'Centro', 'São Paulo', 'SP', 'SenhaTeste2020*', '1', '2'),
 ('00000000001235', 'Empresa de estacionamento teste 2', 'Maria dos Santos', '21', '12347895', '003', 'empresateste2@email.com', 'Rua dos testes', '5678', 'sala 10, 2º andar', '00026756', 'Centro', 'Rio de Janeiro', 'RJ', 'SenhaTeste2020*', '1', '2')
@@ -306,20 +322,30 @@ INSERT INTO tbl_vaga (tbl_equipamento_id_equipamento, tbl_estacionamento_id_esta
 (16, 14567791234567, 'H1', 1)
 
 INSERT INTO tbl_uso (tbl_vaga_id_vaga, id_placa_veiculo, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_uso, timestamp_final_uso, valor_servico_uso) VALUES
-(2, 'AAA1234', '00000001234',1, '2020-11-25 10:43:59.953', '2020-11-25 18:43:59.953', 10),
-(3, 'BBB4321', '00000001235',1, '2020-11-25 10:43:59.953', '2020-11-25 18:43:59.953', 10),
+
 (4, 'ABC1234', '00000001236',1, '2020-12-04 10:43:59.953', '2020-12-04 18:43:59.953', 10),
 (5, 'DEF4321', '00000001237',1, '2020-12-04 10:43:59.953', '2020-12-04 18:43:59.953', 10)
 
 INSERT INTO tbl_reservas (tbl_vaga_id_vaga, tbl_token_id_token, tbl_usuario_id_CPF_usuario, tbl_servico_id_servico, timestamp_inicio_reserva, timestamp_final_reserva, valor_servico_reserva) VALUES 
-(2, 1, '00000001234',1, '2020-11-25 21:43:59.953', '2020-11-25 23:43:59.953', 10),
+
 (2, 1, '00000001234',1, '2020-12-04 21:43:59.953', '2020-12-04 23:43:59.953', 10)
+
+Insert into tbl_servico_vaga Values
+(1,1),
+(1,2),
+(1,3),
+(2,4),
+(2,5),
+(2,6)
 
 GO
 USE bd_estacionamentos
 GO
 
-
+/*
+-- Select vagas com serviços
+Select V.local_vaga from tbl_vaga as V
+inner join tbl_servico_vaga as S on V.id_vaga = S.tbl_vaga_id_vaga where S.tbl_servico_id_servico = 1*/
 
 
 /*

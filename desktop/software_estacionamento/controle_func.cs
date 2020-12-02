@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.VisualBasic;
 using System.Data.Sql;
-using System.Data.SqlServerCe;
 using System.Linq.Expressions;
 
 namespace software_estacionamento
