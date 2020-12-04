@@ -1,0 +1,11 @@
+﻿#mapa {
+    height: 620px;
+    width: 100%;
+    background: #ddd;
+}
+
+@media (max-width: 576px) {
+    #mapa {
+        height: 400px;
+    }
+}

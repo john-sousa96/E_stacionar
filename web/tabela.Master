@@ -1,0 +1,101 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="tabela.master.cs" Inherits="WebEstacionamento.tabela" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
+    <asp:ContentPlaceHolder ID="Tabela_title" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.bootstrap4.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <style type="text/css">
+        #BodyContent_GridView1 {
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        function removerSelecao(button) {
+            $('#loadingRemover')[0].hidden = false;
+            setTimeout(function () { button.disabled = true; }, 100);
+            return true;
+        }
+
+        // função chamada pelo code behind; exibe o alerta de sucesso
+        var AlertarSucesso = function (mensagem) {
+            $('#txtAlertaSucesso').html(mensagem);
+            $('#alertaSucesso').show('fade');
+            setTimeout(function () {
+                window.scrollTo(0, 0);
+            }, 1);
+        };
+
+        // função chamada pelo code behind; exibe o alerta de erro
+        var AlertarErro = function (mensagem) {
+            $('#txtAlertaErro').html(mensagem);
+            $('#alertaErro').show('fade');
+        };
+    </script>
+    <asp:ContentPlaceHolder ID="Tabela_head" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="Tabela_ContentTabela" ContentPlaceHolderID="BodyContent" runat="server">
+    <asp:ScriptManager ID="ScriptManagerTabela" runat="server"></asp:ScriptManager>
+    <section class="container-fluid">
+        <section class="row justify-content-center">
+            <section class="col-sm-6 pt-3 pb-3">
+                <asp:ContentPlaceHolder ID="Tabela_PreGrid" runat="server"></asp:ContentPlaceHolder>
+
+                <asp:UpdatePanel ID="updateTabela" runat="server">
+                    <ContentTemplate>
+                        <asp:GridView ID="GridView1" runat="server" AllowPaging="True"
+                            CssClass="table table-striped table-bordered table-hover"
+                            OnRowCommand="GridView1_RowCommand"
+                            EmptyDataRowStyle-CssClass="text-center" PageSize="10">
+
+                            <Columns>
+                                <asp:ButtonField CommandName="editRegistro" Text="<i class='fas fa-edit' style='color:#2f2f2f;'></i>"></asp:ButtonField>
+                                <asp:ButtonField CommandName="deletarRegistro" Text="<i class='fas fa-ban' style='color:rgba(255,0,0,0.7);'></i>"></asp:ButtonField>
+                            </Columns>
+                        </asp:GridView>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+                <%-- Alerta de erro --%>
+                <div id="alertaErro" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <span id="txtAlertaErro"></span>
+		            <button id="alertClose" type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <asp:ContentPlaceHolder ID="Tabela_PostGrid" runat="server"></asp:ContentPlaceHolder>
+
+            </section>
+        </section>
+    </section>
+</asp:Content>
+
+<asp:Content ID="Content4" ContentPlaceHolderID="PostBodyContent" runat="server">
+    <script type="text/javascript">
+        // carrega a biblioteca DataTables no GridView
+        function CarregarTabela() {
+            console.log("carregou");
+            $('#BodyContent_GridView1').DataTable({
+                responsive: true,
+                "scrollX": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            CarregarTabela();
+        });
+    </script>
+
+    <asp:ContentPlaceHolder ID="Tabela_PostBodyContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
